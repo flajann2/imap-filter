@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+IMAP_PATH = File.expand_path '..', File.dirname(__FILE__)
+IMAP_EXECUTABLE = File.expand_path 'bin/imap-filter', Dir.pwd
+
+$:.unshift File.join([IMAP_PATH, 'lib'])
+
+require 'imap-filter/cli'
+
+ImapFilter::Cli::Main.start
+
