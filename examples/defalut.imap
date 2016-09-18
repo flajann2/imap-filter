@@ -1,0 +1,41 @@
+account :gmx do
+  login ENV['GMX_EMAIL'], ENV['GMX_PASS']
+  serv "imap.gmx.net"
+  ssl false
+  port 993
+end
+
+account :yahoo do
+  login ENV['YAHOO_EMAIL'], ENV['YAHOO_PASS']
+  serv "imap.yahoo.com"
+end
+
+account :google do
+  login ENV['GOOGLE_EMAIL'], ENV['GOOGLE_PASS']
+  serv "imap.google.com"
+end
+
+filter :github, gmx.inbox, from: 'github' do
+  mv gmx.Github
+  mv google.inbox
+end
+
+filter :gitter, gmx.inbox, from: 'gitter' do
+  mv gmx.Gitter
+end
+
+filter :slashdot, gmx.inbox, from: 'slashdot' do
+  mv gmx.Slashdot
+  cp google.inbox
+end
+
+filter :neat, yahoo.NEAT, :all do
+  cp gmx.inbox
+end
+
+filter :spam,  gmx.inbox, from: ['news.brgmedia.com', 'travel.hoteltravel-email.com'] do
+  delete
+end
+
+activate :all
+
