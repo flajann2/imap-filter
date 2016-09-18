@@ -3,17 +3,20 @@ account :gmx do
   login ENV['GMX_EMAIL'], ENV['GMX_PASS']
   serv "imap.gmx.net"
   ssl true
+  auth :login
   #port 993
 end
 
 account :yahoo do
   login ENV['YAHOO_EMAIL'], ENV['YAHOO_PASS']
   serv 'imap.mail.yahoo.com'
+  auth :login
 end
 
 account :google do
   login ENV['GOOGLE_EMAIL'], ENV['GOOGLE_PASS']
   serv "imap.gmail.com"
+  auth :plain
 end
 
 
