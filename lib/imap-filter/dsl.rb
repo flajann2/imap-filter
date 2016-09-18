@@ -71,7 +71,7 @@ module ImapFilter
           @imap =  Net::IMAP.new(fqdn, ssl: use_ssl)
         end
 
-        print "\n    *** auth #{userid} pass #{pass}".light_cyan unless _options[:verbose] < 2
+        print "\n    *** auth #{userid} pass #{pass}...".light_cyan unless _options[:verbose] < 2
         imap.authenticate('LOGIN', userid, pass)
       end
 
