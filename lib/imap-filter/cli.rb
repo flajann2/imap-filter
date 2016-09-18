@@ -11,8 +11,8 @@ module ImapFilter
       
       desc 'filter [script]', "Run the powerplay script. Default #{@@default_script}"
       def filter(script = @@default_script)
-        DSL::_global[:options] = options
-        puts "script %s " % [script] if DSL::_options[:verbose] >= 1
+        _global[:options] = options
+        puts "script %s " % [script] if _options[:verbose] >= 1
         load script, true
         
       end

@@ -7,7 +7,7 @@ end
 
 account :yahoo do
   login ENV['YAHOO_EMAIL'], ENV['YAHOO_PASS']
-  serv "imap.yahoo.com"
+  serv 'imap.yahoo.com'
 end
 
 account :google do
@@ -15,27 +15,26 @@ account :google do
   serv "imap.google.com"
 end
 
-filter :github, gmx.inbox, from: 'github' do
-  mv gmx.Github
-  mv google.inbox
+filter :github, 'gmx.inbox', from: 'github' do
+  mv 'gmx.Github'
+  mv 'google.inbox'
 end
 
-filter :gitter, gmx.inbox, from: 'gitter' do
-  mv gmx.Gitter
+filter :gitter, 'gmx.inbox', from: 'gitter' do
+  mv 'gmx.Gitter'
 end
 
-filter :slashdot, gmx.inbox, from: 'slashdot' do
-  mv gmx.Slashdot
-  cp google.inbox
+filter :slashdot, 'gmx.inbox', from: 'slashdot' do
+  mv 'gmx.Slashdot'
+  cp 'google.inbox'
 end
 
-filter :neat, yahoo.NEAT, :all do
-  cp gmx.inbox
+filter :neat, 'yahoo.NEAT', :all do
+  cp 'gmx.inbox'
 end
 
-filter :spam,  gmx.inbox, from: ['news.brgmedia.com', 'travel.hoteltravel-email.com'] do
+filter :spam,  'gmx.inbox', from: ['news.brgmedia.com', 'travel.hoteltravel-email.com'] do
   delete
 end
 
 activate :all
-
