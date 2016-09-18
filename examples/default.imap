@@ -15,6 +15,12 @@ account :google do
   serv "imap.google.com"
 end
 
+filter :slashdot, 'gmx.inbox', from: 'slashdot' do
+  mark :read
+  mv 'gmx.Slashdot'
+  cp 'google.inbox'
+end
+
 filter :github, 'gmx.inbox', from: 'github' do
   mv 'gmx.Github'
   mv 'google.inbox'
@@ -22,11 +28,6 @@ end
 
 filter :gitter, 'gmx.inbox', from: 'gitter' do
   mv 'gmx.Gitter'
-end
-
-filter :slashdot, 'gmx.inbox', from: 'slashdot' do
-  mv 'gmx.Slashdot'
-  cp 'google.inbox'
 end
 
 filter :neat, 'yahoo.NEAT', :all do

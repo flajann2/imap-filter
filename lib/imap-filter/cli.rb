@@ -14,7 +14,6 @@ module ImapFilter
         _global[:options] = options
         puts "script %s " % [script] if _options[:verbose] >= 1
         load script, true
-        
       end
     end
   end

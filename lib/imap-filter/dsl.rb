@@ -1,3 +1,5 @@
+require 'imap-filter'
+
 module ImapFilter
   module DSL
     @@global_config = {}
@@ -28,17 +30,27 @@ module ImapFilter
     end
     
     class Account < Dsl
-      attr :userid, :pass, :fqdn
+      attr :userid, :pass, :fqdn, :use_ssl, :use_port
       
       def login userid, password
         @userid = userid
         @pass = pass
+        @use_ssl = true
+        @use_port = nil
       end
 
       def serv fqdn
         @fqdn = fqdn
       end
 
+      def ssl t
+        @use_ssl = t
+      end
+      
+      def port p
+        @use_port = p
+      end
+      
       def initialize(name, &block)
         super
         instance_eval( &block )
@@ -47,14 +59,33 @@ module ImapFilter
     end
 
     class Filter < Dsl
-      attr :mbox, :directives
+      attr :mbox, :directives, :actions
 
+      def move to_mbox
+        @actions << [:move, to_mbox]
+      end
+      alias mv move
+
+      def copy to_mbox
+        @actions << [:copy, to_mbox]
+      end
+      alias cp copy
+      
+      def delete
+        @actions << [:delete]
+      end
+
+      def mark state
+        @actions << [:mark, state]
+      end
+      
       # note that directives can be either a hash or a single symbol
-      def initialize(name, mbox, directives &block)
+      def initialize(name, mbox, directives, &block)
         super(name)
         @mbox = mbox
         @directives = directives
-        instance_eval( &block )
+        @actions = []
+        instance_eval &block 
         _filters[name] = self
       end
     end
@@ -64,10 +95,11 @@ module ImapFilter
     end
 
     def filter name, mbox, singledir=nil, **directives, &block
-      Filter name, mbox, singledir || directives
+      Filter.new name, mbox, (singledir || directives), &block
     end
     
     def activate filters
+      Functionality.run_filters filters
     end
   end
 end
