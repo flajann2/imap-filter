@@ -38,6 +38,7 @@ module ImapFilter
         @pass = password
         @use_ssl = true
         @use_port = nil
+        @auth_type = 'PLAIN'
       end
 
       def serv fqdn

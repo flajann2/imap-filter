@@ -4,7 +4,7 @@ account :gmx do
   serv "imap.gmx.net"
   ssl true
   auth :login
-  #port 993
+  port 993
 end
 
 account :yahoo do

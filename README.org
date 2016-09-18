@@ -11,6 +11,13 @@
   to make sure what happens is what is expected.
 
 ** Documentation
+*** Accessing your Gmail
+    Google may automatically block this application by default.
+    Please visit the follow page to understand how to allow 
+    imap-filter to access your Gmail account.
+
+    https://support.google.com/accounts/answer/6010255
+
 *** DSL
     #+begin_src Ruby
     account :redbird do
