@@ -25,11 +25,10 @@ module ImapFilter
         print "  Testing #{name}...".light_white
         begin
           account._open_connection
-          account._close_connection
+          #account._close_connection
           puts "SUCCESS".light_green
         rescue => e
-          puts "FAILED: #{e}".light_red
-          
+          puts "FAILED: #{e}".light_red          
         end
       end
     end

@@ -35,7 +35,7 @@ module ImapFilter
       
       def login userid, password
         @userid = userid
-        @pass = pass
+        @pass = password
         @use_ssl = true
         @use_port = nil
       end
@@ -59,12 +59,20 @@ module ImapFilter
       end
 
       def to_s
-        "USER #{userid} SSL #{use_ssl} PORT #{ use_port ? use_port : '<default>'}"
+        "SERV #{fqdn} USER #{userid} SSL #{use_ssl} PORT #{ use_port ? use_port : '<default>'}"
       end
 
       # connects and logs in
       def _open_connection
-        @imap =  Net::IMAP.new(fqdn, port: use_port, ssl: use_ssl)
+        print "\n    *** connect #{fqdn} port '#{use_port}' ssl #{use_ssl}".light_cyan unless _options[:verbose] < 2
+        unless use_port.nil?
+          @imap =  Net::IMAP.new(fqdn, port: use_port, ssl: use_ssl)
+        else
+          @imap =  Net::IMAP.new(fqdn, ssl: use_ssl)
+        end
+
+        print "\n    *** auth #{userid} pass #{pass}".light_cyan unless _options[:verbose] < 2
+        imap.authenticate('LOGIN', userid, pass)
       end
 
       def _close_connection
