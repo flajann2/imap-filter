@@ -113,7 +113,7 @@ DEPENDENCIES
   rdoc (~> 3.12)
   rspec (~> 2.8.0)
   semver (~> 1)
-  simplecov
+  simplecov (~> 0)
   text-table (~> 1)
   thor (~> 0)
   yard (~> 0.7)
