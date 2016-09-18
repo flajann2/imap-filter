@@ -31,6 +31,7 @@ module ImapFilter
     
     class Account < Dsl
       attr :userid, :pass, :fqdn, :use_ssl, :use_port
+      attr :imap
       
       def login userid, password
         @userid = userid
@@ -60,6 +61,16 @@ module ImapFilter
       def to_s
         "USER #{userid} SSL #{use_ssl} PORT #{ use_port ? use_port : '<default>'}"
       end
+
+      # connects and logs in
+      def _open_connection
+        @imap =  Net::IMAP.new(fqdn, port: use_port, ssl: use_ssl)
+      end
+
+      def _close_connection
+        @imap.close
+      end
+      
     end
 
     class Filter < Dsl

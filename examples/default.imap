@@ -1,7 +1,7 @@
 account :gmx do
   login ENV['GMX_EMAIL'], ENV['GMX_PASS']
   serv "imap.gmx.net"
-  ssl false
+  ssl true
   port 993
 end
 

@@ -10,6 +10,8 @@ module ImapFilter
       @@default_script = ENV['IMAPF_IMAP_FILE'] || 'default.imap' 
       
       desc 'filter [script]', "Run the powerplay script. Default #{@@default_script}"
+      option :dryrun, type: :boolean, aliases: '-u', desc: "Dry run, do not actually execute."
+      option :test, type: :boolean, aliases: '-t', desc: "Test IMAP accounts only."
       def filter(script = @@default_script)
         _global[:options] = options
         puts "script %s " % [script] if _options[:verbose] >= 1
