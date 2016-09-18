@@ -47,18 +47,24 @@ module ImapFilter
     end
 
     class Filter < Dsl
-      
-      def initialize(name, &block)
-        super
+      attr :mbox, :directives
+
+      # note that directives can be either a hash or a single symbol
+      def initialize(name, mbox, directives &block)
+        super(name)
+        @mbox = mbox
+        @directives = directives
         instance_eval( &block )
         _filters[name] = self
       end
     end
     
     def account name, &block
+      Account.new name, &block
     end
 
     def filter name, mbox, singledir=nil, **directives, &block
+      Filter name, mbox, singledir || directives
     end
     
     def activate filters
