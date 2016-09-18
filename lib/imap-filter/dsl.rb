@@ -56,6 +56,10 @@ module ImapFilter
         instance_eval( &block )
         _accounts[name] = self        
       end
+
+      def to_s
+        "USER #{userid} SSL #{use_ssl} PORT #{ use_port ? use_port : '<default>'}"
+      end
     end
 
     class Filter < Dsl
@@ -87,6 +91,10 @@ module ImapFilter
         @actions = []
         instance_eval &block 
         _filters[name] = self
+      end
+
+      def to_s
+        "MBOX #{mbox} DIRECTIVES #{directives}"
       end
     end
     
