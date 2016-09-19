@@ -6,6 +6,7 @@ gem "text-table",  "~> 1"
 gem "thor", "~> 0"
 gem "colorize", "~> 0"
 gem "gmail_xoauth"
+gem "sqlite3"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

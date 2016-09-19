@@ -33,8 +33,25 @@ module ImapFilter
       end
     end
 
+    def self.list_of_filters_to_run
+      unless _options[:filters].nil?
+        _options[:filters].map{ |f| f.to_sym }
+      else
+        _filters.keys
+      end
+    end
+
+    def self.run_filter filt
+      f = _filter[filt]
+    end
+    
     def self.execute_filters
-      login_imap_accounts
+      #login_imap_accounts
+      list_of_filters_to_run.each do |f|
+        print "Running filter: ".light_white
+        puts "#{f}".light_yellow
+        run_filter f
+      end
     end
     
     def self.run_filters filters
