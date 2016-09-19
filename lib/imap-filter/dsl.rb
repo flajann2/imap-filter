@@ -31,7 +31,7 @@ module ImapFilter
     
     class Account < Dsl
       attr :userid, :pass, :fqdn, :use_ssl, :use_port, :auth_type
-      attr :imap
+      attr :imap, :delim
       
       def login userid, password
         @userid = userid
@@ -64,7 +64,7 @@ module ImapFilter
       end
 
       def to_s
-        "SERV #{fqdn} USER #{userid} SSL #{use_ssl} PORT #{ use_port ? use_port : '<default>'} AUTH #{auth_type}"
+        "SERV #{fqdn} USER #{userid} SSL #{use_ssl} PORT #{ use_port ? use_port : '<default>'} AUTH #{auth_type} >DELIM #{delim}"
       end
 
       # connects and logs in
@@ -78,12 +78,12 @@ module ImapFilter
 
         print "\n    *** auth #{userid} pass #{pass}...".light_cyan unless _options[:verbose] < 2
         imap.authenticate(auth_type, userid, pass)
+        @delim = imap.list('', '').first.delim
       end
 
       def _close_connection
-        @imap.close
+        imap.close
       end
-      
     end
 
     class Filter < Dsl

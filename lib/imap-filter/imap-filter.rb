@@ -25,7 +25,7 @@ module ImapFilter
         print "  Testing #{name}...".light_white
         begin
           account._open_connection
-          puts "SUCCESS".light_green
+          puts "SUCCESS, delim #{account.delim}".light_green
         rescue => e
           puts "FAILED: #{e}".light_red
           exit unless test
