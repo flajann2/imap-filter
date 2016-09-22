@@ -108,6 +108,8 @@ module ImapFilter
       end
 
       def search &block
+        OPS = [:or, :not, :new]
+        
         def before d
           directives << 'BEFORE' << d
         end
@@ -124,19 +126,14 @@ module ImapFilter
           directives << 'FROM' << s
         end
 
-        def snew
-          directives << 'NEW'
-        end
-
-        def snot
-          directives << 'NOT'
-        end
-
-        def sor 
-          directives << 'OR'
-        end
-
-        def son d
+        def op *a          
+          a.each { |x|
+            raise "illegal operator #{x}" unless OPS.member? x
+            directives << x.to_s.upcase
+          }
+        end          
+        
+        def on d
           directives << 'ON' << d
         end
 
