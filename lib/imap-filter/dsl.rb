@@ -88,7 +88,8 @@ module ImapFilter
 
     class Filter < Dsl
       attr :mbox, :directives, :actions
-
+      OPS = [:or, :not, :new]
+      
       def move to_mbox
         @actions << [:move, to_mbox]
       end
@@ -107,9 +108,7 @@ module ImapFilter
         @actions << [:mark, state]
       end
 
-      def search &block
-        OPS = [:or, :not, :new]
-        
+      def search &block        
         def before d
           directives << 'BEFORE' << d
         end
