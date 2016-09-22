@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'imap-filter'
 
 module ImapFilter
@@ -89,6 +90,10 @@ module ImapFilter
     class Filter < Dsl
       attr :mbox, :directives, :actions
       OPS = [:or, :not, :new]
+
+      def list *a, **h
+        @actions << [:list, a, h]
+      end
       
       def move to_mbox
         @actions << [:move, to_mbox]

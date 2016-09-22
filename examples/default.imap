@@ -30,8 +30,10 @@ end
 filter :github, 'gmx:INBOX' do
   search do
     from 'github'
-    op :new
+    op :not, :new
   end
+  
+  list :all
   mv 'gmx:Github'
   mv 'google:news/Github'
 end

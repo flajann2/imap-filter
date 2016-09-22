@@ -48,7 +48,7 @@ module ImapFilter
     def self.run_filter filt
       f = FunctFilter.new _filters[filt]
       f.select_email
-      
+      f.process_actions
     end
     
     def self.execute_filters
