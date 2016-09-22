@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'imap-filter'
 
 include ImapFilter::DSL
@@ -41,8 +42,13 @@ module ImapFilter
       end
     end
 
+    # do the selection based on directives
+    # then perform the actions on the set selected.
+    # optimize for copy/moves that are to the same account.
     def self.run_filter filt
-      f = _filter[filt]
+      f = FunctFilter.new _filters[filt]
+      f.select_email
+      
     end
     
     def self.execute_filters
