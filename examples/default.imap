@@ -27,7 +27,10 @@ filter :slashdot, 'gmx:INBOX', from: 'slashdot' do
   cp 'google:INBOX'
 end
 
-filter :github, 'gmx:INBOX', from: 'github' do
+filter :github, 'gmx:INBOX' do
+  search do
+    from 'github'
+  end
   mv 'gmx:Github'
   mv 'google:news/Github'
 end

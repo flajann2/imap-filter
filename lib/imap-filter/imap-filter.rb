@@ -65,6 +65,7 @@ module ImapFilter
       if _options[:test]
         login_imap_accounts test: true
       else
+        login_imap_accounts
         execute_filters
       end
     end

@@ -106,12 +106,60 @@ module ImapFilter
       def mark state
         @actions << [:mark, state]
       end
+
+      def search &block
+        def before d
+          directives << 'BEFORE' << d
+        end
+
+        def body s
+          directives << 'BODY'<< s
+        end
+
+        def cc s
+          directives <<  'CC'<< s
+        end
+
+        def from s
+          directives << 'FROM' << s
+        end
+
+        def snew
+          directives << 'NEW'
+        end
+
+        def snot
+          directives << 'NOT'
+        end
+
+        def sor 
+          directives << 'OR'
+        end
+
+        def son d
+          directives << 'ON' << d
+        end
+
+        def since d
+          directives << 'SINCE' << d
+        end
+
+        def subject s
+          directives << 'SUBJECT' << s
+        end
+
+        def to s
+          directives << 'TO' << s
+        end
+        
+        instance_eval &block        
+      end
       
       # note that directives can be either a hash or a single symbol
-      def initialize(name, mbox, directives, &block)
+      def initialize(name, mbox, directives=[], &block)
         super(name)
         @mbox = mbox
-        @directives = directives
+        @directives = directives.is_a?(Hash) ? directives.map{|k,v| [k.to_s.upcase, v]}.flatten : directives
         @actions = []
         instance_eval &block 
         _filters[name] = self
