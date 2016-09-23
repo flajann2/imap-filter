@@ -269,11 +269,13 @@ module ImapFilter
       def initialize(name, mbox, directives=[], &block)
         super(name)
         @mbox = mbox
-        @directives = directives.is_a?(Hash)
-          ? directives.map{|k,v| [k.to_s.upcase, v]}.flatten
-          : directives.is_a?(Symbol)
-            ? DIRECTIVES[directives]
-            : directives 
+        @directives = if directives.is_a?(Hash)
+                        directives.map{|k,v| [k.to_s.upcase, v]}.flatten
+                      elsif directives.is_a?(Symbol)
+                        DIRECTIVES[directives]
+                      else
+                        directives
+                      end
         @actions = []
         instance_eval &block 
         _filters[name] = self
