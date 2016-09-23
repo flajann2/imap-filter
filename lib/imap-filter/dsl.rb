@@ -96,6 +96,21 @@ module ImapFilter
         deleted: :Deleted,
         flagged: :Flagged
       }
+      DIRECTIVES = {
+        all: 'ALL',
+        new: 'NEW',
+        recent: 'RECENT',
+        seen: 'SEEN',
+        unseen: 'UNSEEN',
+        answered: 'ANSWERED',
+        unanswered: 'UNANSWERED',
+        deleted: 'DELETED',
+        undeleted: 'UNDELETED',
+        draft: 'DRAFT',
+        undraft: 'UNDRAFT',
+        flagged: 'FLAGGED',
+        unflagged: 'UNFLAGGED',
+      }
 
       def list *a, **h
         @actions << [:list, a, h]
@@ -166,9 +181,29 @@ module ImapFilter
         def since d
           directives << 'SINCE' << d
         end
+        
+        def senton d
+          directives << 'SENTON' << d
+        end
+        
+        def sentsince d
+          directives << 'SENTSINCE' << d
+        end
+        
+        def sentbefore d
+          directives << 'SENTBEFORE' << d
+        end
+        
+        def smaller n 
+          directives << 'SMALLER' << n
+        end
 
         def subject s
           directives << 'SUBJECT' << s
+        end
+        
+        def text s
+          directives << 'TEXT' << s
         end
 
         def to s
@@ -234,7 +269,11 @@ module ImapFilter
       def initialize(name, mbox, directives=[], &block)
         super(name)
         @mbox = mbox
-        @directives = directives.is_a?(Hash) ? directives.map{|k,v| [k.to_s.upcase, v]}.flatten : directives
+        @directives = directives.is_a?(Hash)
+          ? directives.map{|k,v| [k.to_s.upcase, v]}.flatten
+          : directives.is_a?(Symbol)
+            ? DIRECTIVES[directives]
+            : directives 
         @actions = []
         instance_eval &block 
         _filters[name] = self
