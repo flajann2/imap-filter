@@ -45,11 +45,12 @@ module ImapFilter
         @seq = acc.imap.search search_criteria
       end
 
-      def ensure_mailbox mailbox
+      def ensure_mailbox account, mailbox
         begin
-          acc.imap.create mailbox
+          account.imap.create mailbox
         rescue Net::IMAP::NoResponseError => e
           # we ignore this because it -- probably -- means the mailbox already exists.
+          puts "  *** ignored mailbox error: #{e}".red unless _options[:verbose] < 1
         end
       end
 
@@ -76,14 +77,20 @@ module ImapFilter
         end unless seq.empty?
       end
 
+      def _cross_account_mvcp op, dest_acc, dest_mbox
+        raise "Not Implemented Yet"
+      end
+      
       def _mvcp op, destination
         raise "Illegal operation #{op}" unless [:copy, :move].member? op
+        
         dest_acc, dest_mbox = parse_and_resolve_account_mbox_string destination
+        ensure_mailbox dest_acc, dest_mbox
+        
         if dest_acc == acc # in-account move
-          ensure_mailbox dest_mbox
           dest_acc.imap.send op, seq, dest_mbox
         else # move or copy to different account
-          raise "Not Implemented Yet"
+          _cross_account_mvcp op, dest_acc, dest_mbox
         end unless seq.empty?
       end
       
