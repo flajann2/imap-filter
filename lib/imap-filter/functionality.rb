@@ -36,7 +36,6 @@ module ImapFilter
       # Take directives and transform them into more general
       # search criteria
       def search_criteria
-        require 'pry'; binding.pry #DEBUGGING
         directives
       end
       
