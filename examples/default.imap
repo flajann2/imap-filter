@@ -20,7 +20,6 @@ account :google do
 end
 
 filter :slashdot, 'gmx:INBOX', from: 'slashdot' do
-  list :all
   #mark :read
   mv 'gmx:Slashdot'
   #cp 'google:INBOX'
@@ -31,8 +30,7 @@ filter :github, 'gmx:INBOX' do
     from 'github'
     op :not, :new
   end
-  
-  list :all
+
   mv 'gmx:Github'
   #mv 'google:news/Github'
 end
@@ -42,13 +40,11 @@ filter :gitter, 'gmx:INBOX', from: 'gitter' do
 end
 
 filter :xing, 'gmx:INBOX', from: 'xing.com' do
-  list :all
   mv 'gmx:Gitter'
 end
 
 filter :neat, 'yahoo:NEAT', :all do
-  list :all
-  cp 'gmx:INBOX'
+  cp 'gmx:NEAT'
 end
 
 filter :spam,  'gmx:INBOX', from: ['news.brgmedia.com', 'travel.hoteltravel-email.com'] do

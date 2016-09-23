@@ -26,11 +26,18 @@ module ImapFilter
         mbox = b
         [acc, mbox]
       end
+
+      # Take directives and transform them into more general
+      # search criteria
+      def search_criteria
+        require 'pry'; binding.pry #DEBUGGING
+        directives
+      end
       
       def select_email
         @acc, box = parse_and_resolve_account_mbox_string mbox
         acc.imap.select box
-        @seq = acc.imap.search directives
+        @seq = acc.imap.search search_criteria
       end
 
       def ensure_mailbox mailbox
@@ -47,9 +54,19 @@ module ImapFilter
         end
       end
 
-      def list *a, **h
+      def subject_list
         subj = 'BODY[HEADER.FIELDS (SUBJECT)]'
-        acc.imap.fetch(seq, subj).each do |subject|
+        unless seq.empty?
+          acc.imap.fetch(seq, subj).map do |subject|
+            subject.attr[subj].to_s.strip.tr("\n\r", '')
+          end
+        else
+          []
+        end
+      end
+
+      def list *a, **h
+        subject_list.each do |subject|
           puts subject.attr[subj].to_s.strip.tr("\n\r", '').light_yellow
         end unless seq.empty?
       end
@@ -66,13 +83,24 @@ module ImapFilter
       end
       
       def move destination
-        _mvcp :move, destination
+        puts "  move from #{acc.name} to #{destination}".light_blue unless _options[:verbose] < 1
+        _mvcp :move, destination unless _options[:dryrun]
       end
       
       def copy destination
-        _mvcp :copy, destination
-      end      
+        puts "  copy from #{acc.name} to #{destination}"-light_blue unless _options[:verbose] < 1
+        _mvcp :copy, destination unless _options[:dryrun]
+      end
+
+      def delete
+        puts "  delete from #{acc.name}"-light_blue unless _options[:verbose] < 1
+      end
+      
+      def mark
+        puts "  mark in #{acc.name}"-light_blue unless _options[:verbose] < 1
+        #acc.imap.store seq, 
+      end
+      
     end
-    
   end
 end

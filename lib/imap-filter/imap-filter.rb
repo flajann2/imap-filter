@@ -5,6 +5,9 @@ include ImapFilter::DSL
 
 module ImapFilter
   module Functionality
+    STATUS = {messages: 'MESSAGES', recent: 'RECENT', unseen: 'UNSEEN'}
+    ISTAT = STATUS.map{ |k, v| [v, k] }.to_h
+    
     def self.show_imap_plan
       puts '====== Accounts'.light_yellow
       _accounts.each do |name, account|
@@ -19,14 +22,36 @@ module ImapFilter
         puts          
       end
     end
+
+    # List all mboxes of given account and their statuses
+    def self.list_mboxes account
+      account.imap.list('', '*')
+        .map { |m| [m['name'], m['attr']] }
+        .map { |mbox, attr|
+        begin
+          [mbox,
+           account.imap.status(mbox, STATUS.values)
+             .map{ |k, v| "#{ISTAT[k]}:#{v}" }
+             .join(' '),
+           attr]
+        rescue
+          nil
+        end }
+        .compact
+    end
     
     def self.login_imap_accounts test: false
       puts "====== #{test ? 'Test' : 'Login'} Accounts".light_yellow
       _accounts.each do |name, account|
-        print "  Testing #{name}...".light_white
+        print "  Account #{name}...".light_white
         begin
           account._open_connection
           puts "SUCCESS, delim #{account.delim}".light_green
+          list_mboxes(account).each do |mbox, stat, attr|
+            print "  #{mbox}".light_blue
+            print " #{stat}".light_red
+            puts " #{attr}".light_cyan
+          end unless _options[:verbose] < 2
         rescue => e
           puts "FAILED: #{e}".light_red
           exit unless test
@@ -48,8 +73,17 @@ module ImapFilter
     def self.run_filter filt
       f = FunctFilter.new _filters[filt]
       f.select_email
-      f.process_actions
-      f.acc.imap.expunge
+      
+      unless _options[:verbose] < 1
+        puts "====== Email to be processed by #{filt}".light_yellow
+        f.subject_list.each do |subject|
+          print '  ##'.yellow
+          puts subject.light_blue
+        end
+      end
+      
+      f.process_actions 
+      f.acc.imap.expunge unless _options[:dryrun]
     end
     
     def self.execute_filters

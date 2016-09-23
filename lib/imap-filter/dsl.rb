@@ -31,7 +31,7 @@ module ImapFilter
     end
     
     class Account < Dsl
-      attr :userid, :pass, :fqdn, :use_ssl, :use_port, :auth_type
+      attr :name, :userid, :pass, :fqdn, :use_ssl, :use_port, :auth_type
       attr :imap, :delim
       
       def login userid, password
@@ -60,6 +60,7 @@ module ImapFilter
       
       def initialize(name, &block)
         super
+        @name = name
         instance_eval( &block )
         _accounts[name] = self        
       end
