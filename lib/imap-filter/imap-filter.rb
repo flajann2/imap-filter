@@ -49,6 +49,7 @@ module ImapFilter
       f = FunctFilter.new _filters[filt]
       f.select_email
       f.process_actions
+      f.acc.imap.expunge
     end
     
     def self.execute_filters

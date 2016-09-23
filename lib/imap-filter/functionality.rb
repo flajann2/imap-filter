@@ -33,6 +33,14 @@ module ImapFilter
         @seq = acc.imap.search directives
       end
 
+      def ensure_mailbox mailbox
+        begin
+          acc.imap.create mailbox
+        rescue Net::IMAP::NoResponseError => e
+          # we ignore this because it -- probably -- means the mailbox already exists.
+        end
+      end
+
       def process_actions
         actions.each do |action|
           send *action
@@ -40,10 +48,32 @@ module ImapFilter
       end
 
       def list *a, **h
-        acc.imap.fetch(seq, 'BODY[HEADER.FIELDS (SUBJECT)]').each do |subject|
-          puts subject.to_s.light_yellow
-        end
+        subj = 'BODY[HEADER.FIELDS (SUBJECT)]'
+        acc.imap.fetch(seq, subj).each do |subject|
+          puts subject.attr[subj].to_s.strip.tr("\n\r", '').light_yellow
+        end unless seq.empty?
       end
+
+      def move destination
+        dest_acc, dest_mbox = parse_and_resolve_account_mbox_string destination
+        if dest_acc == acc # in-account move
+          ensure_mailbox dest_mbox
+          dest_acc.imap.move seq, dest_mbox
+        else # move to different account
+          raise "Not Implemented Yet"
+        end unless seq.empty?
+      end
+      
+      def copy destination
+        dest_acc, dest_mbox = parse_and_resolve_account_mbox_string destination
+        if dest_acc == acc # in-account move
+          ensure_mailbox dest_mbox
+          dest_acc.imap.copy seq, dest_mbox
+        else # copy to different account
+          raise "Not Implemented Yet"
+        end unless seq.empty?
+      end
+      
     end
     
   end
