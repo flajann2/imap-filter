@@ -40,7 +40,8 @@ filter :gitter, 'gmx:INBOX', from: 'gitter' do
 end
 
 filter :xing, 'gmx:INBOX', from: 'xing.com' do
-  mv 'gmx:Gitter'
+  unmark :seen
+  #mv 'gmx:Gitter'
 end
 
 filter :neat, 'yahoo:NEAT', :all do

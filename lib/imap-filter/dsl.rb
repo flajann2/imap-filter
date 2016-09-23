@@ -91,6 +91,11 @@ module ImapFilter
     class Filter < Dsl
       attr :mbox, :directives, :actions
       OPS = [:or, :not, :new]
+      MARKS = {
+        seen: :Seen,
+        deleted: :Deleted,
+        flagged: :Flagged
+      }
 
       def list *a, **h
         @actions << [:list, a, h]
@@ -110,9 +115,21 @@ module ImapFilter
         @actions << [:delete]
       end
 
-      def mark state
-        @actions << [:mark, state]
+      def mark *flags
+        flags.each do |f|
+          raise "Illegal flag #{f}" unless MARKS.member? f
+        end
+        @actions << [:mark] + flags.map{ |f| MARKS[f] }
       end
+      alias store mark
+
+      def unmark *flags
+        flags.each do |f|
+          raise "Illegal flag #{f}" unless MARKS.member? f
+        end
+        @actions << [:unmark] + flags.map{ |f| MARKS[f] }
+      end
+      alias unstore unmark
 
       def search &block        
         def before d

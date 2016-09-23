@@ -3,6 +3,12 @@ module ImapFilter
     include Forwardable
     include ImapFilter::DSL
 
+    SEARCH_CRITERIA = {
+      all: nil,
+      new: nil,
+      seen: nil
+    }
+    
     class FunctFilter
       extend Forwardable
       
@@ -96,11 +102,15 @@ module ImapFilter
         puts "  delete from #{acc.name}"-light_blue unless _options[:verbose] < 1
       end
       
-      def mark
+      def mark *flags
         puts "  mark in #{acc.name}"-light_blue unless _options[:verbose] < 1
-        #acc.imap.store seq, 
+        acc.imap.store seq, '+FLAGS.SILENT', flags unless _options[:dryrun]
       end
       
+      def unmark *flags
+        puts "  unmark in #{acc.name}"-light_blue unless _options[:verbose] < 1
+        acc.imap.store seq, '-FLAGS.SILENT', flags unless _options[:dryrun]
+      end      
     end
   end
 end
