@@ -54,26 +54,24 @@ module ImapFilter
         end unless seq.empty?
       end
 
-      def move destination
+      def _mvcp op, destination
+        raise "Illegal operation #{op}" unless [:copy, :move].member? op
         dest_acc, dest_mbox = parse_and_resolve_account_mbox_string destination
         if dest_acc == acc # in-account move
           ensure_mailbox dest_mbox
-          dest_acc.imap.move seq, dest_mbox
-        else # move to different account
+          dest_acc.imap.send op, seq, dest_mbox
+        else # move or copy to different account
           raise "Not Implemented Yet"
         end unless seq.empty?
+      end
+      
+      def move destination
+        _mvcp :move, destination
       end
       
       def copy destination
-        dest_acc, dest_mbox = parse_and_resolve_account_mbox_string destination
-        if dest_acc == acc # in-account move
-          ensure_mailbox dest_mbox
-          dest_acc.imap.copy seq, dest_mbox
-        else # copy to different account
-          raise "Not Implemented Yet"
-        end unless seq.empty?
-      end
-      
+        _mvcp :copy, destination
+      end      
     end
     
   end
