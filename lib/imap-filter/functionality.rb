@@ -93,7 +93,7 @@ module ImapFilter
       end
       
       def copy destination
-        puts "  copy from #{acc.name} to #{destination}"-light_blue unless _options[:verbose] < 1
+        puts "  copy from #{acc.name} to #{destination}".light_blue unless _options[:verbose] < 1
         _mvcp :copy, destination unless _options[:dryrun]
       end
 
