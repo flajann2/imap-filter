@@ -100,6 +100,7 @@ module ImapFilter
 
       def delete
         puts "  delete from #{acc.name}"-light_blue unless _options[:verbose] < 1
+        mark :Deleted unless _options[:dryrun]
       end
       
       def mark *flags
@@ -110,7 +111,7 @@ module ImapFilter
       def unmark *flags
         puts "  unmark in #{acc.name}"-light_blue unless _options[:verbose] < 1
         acc.imap.store seq, '-FLAGS.SILENT', flags unless _options[:dryrun]
-      end      
+      end
     end
   end
 end

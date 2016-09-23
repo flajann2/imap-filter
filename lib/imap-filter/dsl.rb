@@ -141,7 +141,11 @@ module ImapFilter
         end
 
         def cc s
-          directives <<  'CC'<< s
+          directives << 'CC' << s
+        end
+
+        def bcc s
+          directives << 'BCC' << s
         end
 
         def from s
@@ -170,6 +174,58 @@ module ImapFilter
         def to s
           directives << 'TO' << s
         end
+
+        def all
+          directives << 'ALL'
+        end
+        
+        def answered
+          directives << 'ANSWERED'
+        end
+        
+        def unanswered
+          directives << 'UNANSWERED'
+        end
+        
+        def deleted
+          directives << 'DELETED'
+        end
+        
+        def undeleted
+          directives << 'UNDELETED'
+        end
+        
+        def draft
+          directives << 'DRAFT'
+        end
+        
+        def undraft
+          directives << 'UNDRAFT'
+        end
+        
+        def flagged
+          directives << 'FLAGGED'
+        end
+        
+        def unflagged
+          directives << 'UNFLAGGED'
+        end
+        
+        def seen
+          directives << 'SEEN'
+        end
+        
+        def unseen
+          directives << 'UNSEEN'
+        end
+        
+        def keyword key
+          directives << 'KEYWORD' << key
+        end      
+        
+        def unkeyword key
+          directives << 'UNKEYWORD' << key
+        end      
         
         instance_eval &block        
       end
