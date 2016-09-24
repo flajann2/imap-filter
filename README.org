@@ -70,3 +70,11 @@
 
    Copyright (c) 2016 Fred Mitchell. See LICENSE.txt for
    further details.
+
+** Scratchpad
+   This section is my personal scratchpad. Should be of
+   no revelance to anyone else. Please ignore what's in
+   this section.
+*** FETCH
+   acc.imap.fetch(40..41, 'BODY[TEXT]') -- the entire text, flags as well.
+   acc.imap.fetch(40..41, 'BODY[HEADER.FIELDS (SUBJECT)]')

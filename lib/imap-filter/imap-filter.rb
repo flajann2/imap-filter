@@ -43,7 +43,7 @@ module ImapFilter
     def self.login_imap_accounts test: false
       puts "====== #{test ? 'Test' : 'Login'} Accounts".light_yellow
       _accounts.each do |name, account|
-        print "  Account #{name}...".light_white
+        print "  #{name}...".light_white
         begin
           account._open_connection
           puts "SUCCESS, delim #{account.delim}".light_green

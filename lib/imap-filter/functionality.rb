@@ -1,3 +1,4 @@
+# coding: utf-8
 module ImapFilter
   module Functionality
     include Forwardable
@@ -8,6 +9,8 @@ module ImapFilter
       new: nil,
       seen: nil
     }
+    
+    BODYTEXT ='BODY[TEXT]'
     
     class FunctFilter
       extend Forwardable
@@ -77,8 +80,16 @@ module ImapFilter
         end unless seq.empty?
       end
 
-      def _cross_account_mvcp op, dest_acc, dest_mbox
-        raise "Not Implemented Yet"
+      def _cross_account_mvcp op, dest_acc, dest_mbox        
+        ensure_mailbox dest_acc, dest_mbox
+        acc.imap.fetch(seq, BODYTEXT).each do |fdat|
+          unless _options[:verbose] < 2
+            print "  >>".yellow
+            puts " seq #{fdat.seqno} -> #{dest_acc.name}:#{dest_mbox}".light_blue
+          end
+          require 'pry'; binding.pry #DEBUGGING
+          dest_acc.imap.append dest_mbox, fdat.attr[BODYTEXT], fdat.attr['FLAGS']
+        end
       end
       
       def _mvcp op, destination
