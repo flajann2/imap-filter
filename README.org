@@ -6,7 +6,7 @@
   The imap-filter DSL makes it easy to filter. You can also do "dry-runs"
   to make sure what happens is what is expected.
 
-** Installation
+** Installation Instructions
    This is a Ruby CLI application. If you are running Linux, most likely
    you have Ruby already installed. If you are running MacOSX or Windows,
    you may have to Install Ruby. We support Ruby 2.2 and later.
@@ -35,7 +35,7 @@
     account. Then you can look at the sample [[examples/default.imap][default.imap]]
     file, and go beyond.
 
-    First, install imap-filter as described in [[Installation]].
+    First, install imap-filter as described in [[Installation Instructions]].
 
 *** Environment variables
     | Variable        | Description                                                       |
