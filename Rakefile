@@ -22,8 +22,15 @@ Juwelier::Tasks.new do |gem|
   gem.name = "imap-filter"
   gem.homepage = "http://github.com/flajann2/imap-filter"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{IMAP Scriptable filter for one or multiple Email accounts.}
+  gem.description = %Q{
+  imap-filter is a Ruby implementation of an IMAP filtering application.
+  it can handle multiple IMAP accounts, and create IMAP folders automatically
+  where none exists.
+
+  The imap-filter DSL makes it easy to filter. You can also do "dry-runs"
+  to make sure what happens is what is expected.}
+  
   gem.email = "fred.mitchell@gmx.de"
   gem.authors = ["Fred Mitchell"]
   gem.version = s_version

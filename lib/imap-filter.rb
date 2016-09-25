@@ -5,7 +5,6 @@ require 'ap'
 require 'colorize'
 require 'awesome_print'
 require 'net/imap'
-require 'gmail_xoauth'
 require 'forwardable'
 
 module ImapFilter

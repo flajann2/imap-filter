@@ -1,22 +1,20 @@
 * imap-filter
-
   imap-filter is a Ruby implementation of an IMAP filtering application.
   it can handle multiple IMAP accounts, and create IMAP folders automatically
   where none exists.
 
-  Filteration is done on the basis of regex expressions on headers and 
-  content. 
-
   The imap-filter DSL makes it easy to filter. You can also do "dry-runs"
   to make sure what happens is what is expected.
 ** Installation
-*** Sqlite3
-    libsqlite3-dev
+   This is a Ruby CLI application. If you are running Linux, most likely
+   you have Ruby already installed. If you are running MacOSX or Windows,
+   you may have to Install Ruby. We support Ruby 2.2 and later.
 
-    sqlite3.h is missing. Try 'port install sqlite3 +universal',
-    'yum install sqlite-devel' or 'apt-get install libsqlite3-dev'
-    and check your shared library search path (the
-    location where your sqlite3 shared library is located)
+   Simply, do:
+
+   #+begin_src bash
+   gem install 
+   #+end_src
 
 ** Documentation
 *** Accessing your Gmail
