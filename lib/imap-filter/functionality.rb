@@ -10,7 +10,7 @@ module ImapFilter
       seen: nil
     }
     
-    BODYTEXT ='BODY[TEXT]'
+    BODYTEXT ='BODY.PEEK[TEXT]'
     
     class FunctFilter
       extend Forwardable
@@ -36,16 +36,10 @@ module ImapFilter
         [acc, mbox]
       end
 
-      # Take directives and transform them into more general
-      # search criteria
-      def search_criteria
-        directives
-      end
-      
       def select_email
         @acc, box = parse_and_resolve_account_mbox_string mbox
         acc.imap.select box
-        @seq = acc.imap.search search_criteria
+        @seq = acc.imap.search directives
       end
 
       def ensure_mailbox account, mailbox
@@ -64,7 +58,7 @@ module ImapFilter
       end
 
       def subject_list
-        subj = 'BODY[HEADER.FIELDS (SUBJECT)]'
+        subj = 'BODY.PEEK[HEADER.FIELDS (SUBJECT)]'
         unless seq.empty?
           acc.imap.fetch(seq, subj).map do |subject|
             subject.attr[subj].to_s.strip.tr("\n\r", '')

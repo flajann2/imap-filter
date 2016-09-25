@@ -71,7 +71,6 @@ module ImapFilter
     # then perform the actions on the set selected.
     # optimize for copy/moves that are to the same account.
     def self.run_filter filt
-      require 'pry'; binding.pry #DEBUGGING
       f = FunctFilter.new _filters[filt]
       f.select_email
       

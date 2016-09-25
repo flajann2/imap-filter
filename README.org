@@ -76,5 +76,5 @@
    no revelance to anyone else. Please ignore what's in
    this section.
 *** FETCH
-   acc.imap.fetch(40..41, 'BODY[TEXT]') -- the entire text, flags as well.
-   acc.imap.fetch(40..41, 'BODY[HEADER.FIELDS (SUBJECT)]')
+   acc.imap.fetch(1..2, 'BODY[TEXT]') -- the entire text, flags as well.
+   acc.imap.fetch(1..2, 'BODY[HEADER.FIELDS (SUBJECT)]')
