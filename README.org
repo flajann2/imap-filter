@@ -166,12 +166,64 @@
     So now, let's run it with the following commands. First, we wish to do a
     sanity check, so we will do a dry run:
 
-    #+begin_src basn
+    #+begin_src bash
     imap-filter filter default.imap -u -v1
     #+end_src
 
-    The "-u" is the alias for "--dryrun"
+    The "-u" is the alias for "--dryrun" The "-v1" is the verbosity switch. While
+    doing your setups and debugging your scripts, you will want to use "-v1" or even
+    "-v2" verbosity settings. 
+    
+    If you actually have a match for the search critieria, you may see a list of messages
+    that matched the search scroll by. In my test case:
 
+    #+begin_src bash
+    ...
+    ##Subject: Re: [jekyll/jekyll] jekyll serve can't work (#5216)
+    ##Subject: [jruby/jruby] Fix Socket.tcp connect_timeout option (#4061)
+    ##Subject: Re: [ansible/ansible-modules-core] Add state=empty into file module (#902)
+    ##Subject: [ansible/ansible] Publish modules to Galaxy? (#17027)
+    ##Subject: [ansible/ansible-modules-core] Add support for password aging on Solaris (#4372)
+    ##Subject: Re: [jruby/jruby] Fix Socket.tcp connect_timeout option (#4061)
+    ##Subject: Re: [tmux/tmux] Keeps getting "lost server" in tmux 2.1 and 2.2. Installed using Homebrew (#498)
+    ##Subject: [jekyll/jekyll] Add link to Staticman (#5224)
+    ##Subject: Re: [ansible/ansible] Ansible facts override special variables (#16935)
+    ##Subject: Re: [elixir-lang/elixir] Introduce List.pop_at/3 (#5118)
+    ...
+    #+end_src
+
+    Which are all unread or "unseen" as per our specificaions. Now no modifications
+    were peformed due to the "-u" dry run switch. 
+
+    Now that we are feeling a bit more confident, let's run the same
+    command without the "-u" setting:
+
+    #+begin_src bash
+    imap-filter filter default.imap -v1
+    #+end_src
+
+    And now you will find that the filter actually executed what we wanted. A new
+    test/Gitub mailbox was created, and all the matching messages are now copied there.
+    Neat, huh?
+
+    Well, that's it for the tutorial. Please have a look at the [[examples/default.imap][example]].
+
+    There's a shorthand for the filters that may interest you for the 
+    majority of your cases. For example:
+
+    #+begin_src ruby
+    filter :slashdot, 'gmx:INBOX', from: 'slashdot' do
+      mark :seen
+      cp 'google:INBOX'
+      mv 'gmx:Slashdot'
+    end
+    #+end_src
+
+    Uses the short-hand of "from: 'slashdot'" when all you need
+    to do is search a single field, like in this case, the From
+    field.
+
+    Others are obvios: to:, cc:, subject: will all work here.
 
 *** Environment variables
     | Variable        | Description                                                       |
