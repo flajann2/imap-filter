@@ -35,7 +35,7 @@
     account. Then you can look at the sample [[examples/default.imap][default.imap]]
     file, and go beyond.
 
-    First, install imap-filter as described in [[Installation Instructions]].
+    First, install imap-filter as described in [[Installation Instructions][Installation]].
 
 *** Environment variables
     | Variable        | Description                                                       |
