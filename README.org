@@ -5,6 +5,7 @@
 
   The imap-filter DSL makes it easy to filter. You can also do "dry-runs"
   to make sure what happens is what is expected.
+
 ** Installation
    This is a Ruby CLI application. If you are running Linux, most likely
    you have Ruby already installed. If you are running MacOSX or Windows,
@@ -17,12 +18,28 @@
    #+end_src
 
 ** Documentation
+   I think that to make this documenation truly "complete", I would wind up writing 
+   more lines than in the imap-filter code itself!!! I will attempt to be as concise
+   as possible, and besides me writing a thick manual, no one wants to read such either.
+
+*** Tutorial and Examples
+    Let's go though the steps with just one Email account, then we'll add a second
+    account. Then you can look at the sample [[examples/default.imap][default.imap]]
+    file, and go beyond.
+
+
 *** Accessing your Gmail
     Google may automatically block this application by default.
     Please visit the follow page to understand how to allow 
     imap-filter to access your Gmail account.
 
     https://support.google.com/accounts/answer/6010255
+
+*** Automatic blocks might happen while you are testing your Email accounts
+    Depending on the vendor, while you are setting up your scripts, you will
+    be doing many tests. Some vendors like Yahoo might block the app if it sees 
+    what it consideres to be "too much" activity. If you see this happen, wait about 
+    30 minutes before trying again. Should work in most cases.
 
 *** DSL
     #+begin_src Ruby
