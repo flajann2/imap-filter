@@ -35,15 +35,84 @@
     account. Then you can look at the sample [[examples/default.imap][default.imap]]
     file, and go beyond.
 
+    This tutorial assumes you have both a Gmail and a Yahoo account. Please feel free
+    to substitute with your own accounts.
+
     First, install imap-filter as described in [[#installation][Installation]].
 
-    Next, create a default.imap
+    Next, create a default.imap file with Emacs, vi, nano, or whatever suits your fancy. Place
+    in it the following:
+
+    #+begin_src ruby
+    account :gmail do
+      login 'youruserid@gmail.com', 'yourpassword'
+      serv "imap.gmail.com"
+      auth :plain
+    end
+    #+end_src
+
+    And obviously adjust your userid and password to your own. Now let's try to run
+    your new script:
+
+    #+begin_src basn
+    imap-filter filter default.imap -t
+    #+end_src
+
+    Note that the '-t' is the test flag. It will simply test the connections
+    to your accounts and nothing more.
+
+    And nothing happens. Why not? Very simple. The directive of this file
+    must be activated. Edit your default.imap and add "activate :all" to the very 
+    end:
+
+    #+begin_src ruby
+    account :gmail do
+      login 'youruserid@gmail.com', 'yourpassword'
+      serv "imap.gmail.com"
+      auth :plain
+    end
+
+    activate :all
+    #+end_src
+
+    Now run the command again:
+    #+begin_src basn
+    imap-filter filter default.imap -t
+    #+end_src
+
+    Ah, something happens now! If all goes well, you should see the following:
+
+    #+begin_src bash
+    ====== Test Accounts
+      gmail...SUCCESS, delim /
+    #+end_src
+
+    The "delim" is the mailbox delimiter for your paricular vendor. Most places
+    use the forward slash (/). Some might use a period (.). This lets you know what
+    to use, so make particular note of that.
+
+    If something is wrong with your settings, you might see an error message similar to:
+
+    #+begin_src bash
+    ====== Test Accounts
+      gmail...FAILED: Lookup failed xxxxxxxxxxxxx
+    #+end_src
+    
+    And so check your login line to make sure your userID and password is correct.
+    For some vendors, the userID is your complete email address. For others, it might 
+    just be what procedes the '@'. Please check with your vendor to see what it is for
+    you. Usually, your vendor will have IMAP Client instructions on their website.
+
+    We use ssl connections by default, and it would be extremely insecure not to. But
+    you can turn off the ssl if need be. You can also change your port settings 
+    accordingly, if your vendor uses a non-standard port. For example,
+
 
 *** Environment variables
     | Variable        | Description                                                       |
     |-----------------+-------------------------------------------------------------------|
     | IMAPF_IMAP_FILE | pathname to the default .imap file. The default is ./default.imap |
-    |                 |                                                                   |
+
 *** Accessing your Gmail
     Google may automatically block this application by default.
     Please visit the follow page to understand how to allow 
