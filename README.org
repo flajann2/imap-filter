@@ -75,6 +75,16 @@
     https://tools.ietf.org/html/rfc3501
     https://www.ietf.org/rfc/rfc2822.txt
 
+** Release Notes and Known Issues
+*** Release Notes
+    | Version | Breif           | Description |
+    |---------+-----------------+-------------|
+    | v0.0.2  | Initial Release |             |
+*** Known Issues
+    |       Date | Description                                                    |
+    |------------+----------------------------------------------------------------|
+    | 2016-09-25 | Remote copy / moves of HTML-based email does not work cleanly. |
+    |            |                                                                |
 
 ** Contributing to imap-filter
 
