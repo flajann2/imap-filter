@@ -49,7 +49,7 @@ filter :neat, 'yahoo:NEAT', :unseen do
   mark :seen
 end
 
-filter :spam,  'gmx:INBOX', from: ['news.brgmedia.com', 'travel.hoteltravel-email.com'] do
+filter :spam, 'gmx:INBOX', from: ['news.brgmedia.com', 'travel.hoteltravel-email.com'] do
   delete
 end
 
