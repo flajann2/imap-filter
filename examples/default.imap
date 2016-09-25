@@ -48,6 +48,10 @@ filter :neat, 'yahoo:NEAT', :all do
   cp 'gmx:NEAT'
 end
 
+filter :foo, 'google:Shelby', :all do
+  cp 'gmx:Foobar'
+end
+
 filter :spam,  'gmx:INBOX', from: ['news.brgmedia.com', 'travel.hoteltravel-email.com'] do
   delete
 end
