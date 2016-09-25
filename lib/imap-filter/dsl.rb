@@ -271,18 +271,31 @@ module ImapFilter
         
         instance_eval &block        
       end
+
+      def massage directives
+        if directives.is_a?(Hash)
+          directives.map{ |k, v|
+            unless v.is_a? Array
+              [k.to_s.upcase, v]
+            else
+              ['OR',
+               v.map{ |va|
+                 [k.to_s.upcase, va]
+               }].flatten
+            end
+          }.flatten
+        elsif directives.is_a?(Symbol)
+          DIRECTIVES[directives]
+        else
+          directives
+        end
+      end
       
       # note that directives can be either a hash or a single symbol
       def initialize(name, mbox, directives=[], &block)
         super(name)
         @mbox = mbox
-        @directives = if directives.is_a?(Hash)
-                        directives.map{|k,v| [k.to_s.upcase, v]}.flatten
-                      elsif directives.is_a?(Symbol)
-                        DIRECTIVES[directives]
-                      else
-                        directives
-                      end
+        @directives = massage directives
         @actions = []
         instance_eval &block 
         _filters[name] = self

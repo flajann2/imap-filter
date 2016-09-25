@@ -21,13 +21,13 @@ end
 
 filter :slashdot, 'gmx:INBOX', from: 'slashdot' do
   mark :seen
-  mv 'gmx:Slashdot'
   cp 'google:INBOX'
+  mv 'gmx:Slashdot'
 end
 
 filter :github, 'gmx:INBOX' do
   search do
-    from 'github'
+    from 'github.com'
     unseen
   end
 
@@ -40,8 +40,8 @@ filter :gitter, 'gmx:INBOX', from: 'gitter' do
 end
 
 filter :xing, 'gmx:INBOX', from: 'xing.com' do
+  mv 'gmx:XING'
   unmark :seen
-  mv 'gmx:Gitter'
 end
 
 filter :neat, 'yahoo:NEAT', :unseen do

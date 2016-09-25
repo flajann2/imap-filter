@@ -110,12 +110,12 @@ module ImapFilter
       end
       
       def mark *flags
-        puts "  mark in #{acc.name}".light_blue unless _options[:verbose] < 1
+        puts "  mark #{flags} in #{acc.name}".light_blue unless _options[:verbose] < 1
         acc.imap.store seq, '+FLAGS.SILENT', flags unless seq.empty? or _options[:dryrun]
       end
       
       def unmark *flags
-        puts "  unmark in #{acc.name}".light_blue unless _options[:verbose] < 1
+        puts "  unmark #{flags} in #{acc.name}".light_blue unless _options[:verbose] < 1
         acc.imap.store seq, '-FLAGS.SILENT', flags unless seq.empty? or _options[:dryrun]
       end
     end
