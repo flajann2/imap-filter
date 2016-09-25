@@ -71,13 +71,18 @@ module ImapFilter
 
       def _cross_account_mvcp op, dest_acc, dest_mbox        
         ensure_mailbox dest_acc, dest_mbox
-        acc.imap.fetch(seq, FULL).each do |fdat|
-          unless _options[:verbose] < 2
-            print "  >>".yellow
-            puts " seq #{fdat.seqno} #{fdat.attr['ENVELOPE']['subject']} -> #{dest_acc.name}:#{dest_mbox}".light_blue
+        begin
+          acc.imap.fetch(seq, FULL).each do |fdat|
+            unless _options[:verbose] < 2
+              print "  >>".yellow
+              puts " seq #{fdat.seqno} #{fdat.attr['ENVELOPE']['subject']} -> #{dest_acc.name}:#{dest_mbox}".light_blue
+            end
+            raw = fdat.attr['ENVELOPE'].email_header + fdat.attr[BODYTEXT]
+            dest_acc.imap.append dest_mbox, raw, fdat.attr['FLAGS']
           end
-          raw = fdat.attr['ENVELOPE'].email_header + fdat.attr[BODYTEXT]
-          dest_acc.imap.append dest_mbox, raw, fdat.attr['FLAGS']
+        rescue => e
+          puts "ERROR: #{e} -- perhaps you did a move or delete operation before copy?".light_red
+          exit 10
         end
       end
       

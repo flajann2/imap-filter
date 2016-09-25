@@ -23,8 +23,6 @@ GEM
       faraday (~> 0.8, < 0.10)
       hashie (>= 3.4)
       oauth2 (~> 1.0)
-    gmail_xoauth (0.4.2)
-      oauth (>= 0.3.6)
     hashie (3.4.6)
     highline (1.7.8)
     interception (0.5)
@@ -48,7 +46,6 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
-    oauth (0.5.1)
     oauth2 (1.2.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
@@ -104,23 +101,22 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print (~> 1)
-  bundler (~> 1.0)
+  bundler (~> 1)
   colorize (~> 0)
-  gmail_xoauth
-  juwelier (~> 2.1.0)
+  juwelier (~> 2)
   pry (~> 0)
   pry-byebug (~> 3)
   pry-doc (~> 0)
   pry-remote (~> 0)
   pry-rescue (~> 1)
   pry-stack_explorer (~> 0)
-  rdoc (~> 3.12)
-  rspec (~> 2.8.0)
+  rdoc (~> 3)
+  rspec (~> 2)
   semver (~> 1)
   simplecov (~> 0)
   text-table (~> 1)
   thor (~> 0)
-  yard (~> 0.7)
+  yard (~> 0)
 
 BUNDLED WITH
    1.12.5

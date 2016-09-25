@@ -31,8 +31,8 @@ filter :github, 'gmx:INBOX' do
     unseen
   end
 
+  cp 'google:news/Github'
   mv 'gmx:Github'
-  mv 'google:news/Github'
 end
 
 filter :gitter, 'gmx:INBOX', from: 'gitter' do
