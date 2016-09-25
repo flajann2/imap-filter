@@ -14,8 +14,16 @@
    Simply, do:
 
    #+begin_src bash
-   gem install 
+   gem install imap-filter
    #+end_src
+
+   or if in a Gemfile:
+
+   #+begin_src ruby
+   gem 'imap-filter'
+   #+end_src
+
+   By default, 
 
 ** Documentation
    I think that to make this documenation truly "complete", I would wind up writing 
@@ -27,7 +35,13 @@
     account. Then you can look at the sample [[examples/default.imap][default.imap]]
     file, and go beyond.
 
+    First, install imap-filter as described in [[Installation]].
 
+*** Environment variables
+    | Variable        | Description                                                       |
+    |-----------------+-------------------------------------------------------------------|
+    | IMAPF_IMAP_FILE | pathname to the default .imap file. The default is ./default.imap |
+    |                 |                                                                   |
 *** Accessing your Gmail
     Google may automatically block this application by default.
     Please visit the follow page to understand how to allow 
