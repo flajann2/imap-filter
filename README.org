@@ -107,6 +107,71 @@
     you can turn off the ssl if need be. You can also change your port settings 
     accordingly, if your vendor uses a non-standard port. For example,
 
+    #+begin_src ruby
+    account :gmail do
+      login 'youruserid@gmail.com', 'yourpassword'
+      serv "imap.gmail.com"
+      auth :plain
+      ssl true
+      port 993
+    end
+
+    activate :all
+    #+end_src
+
+    You may set ssl to "false" or make the port "2001". You have full
+    control over the settings. auth could be :login or :plain, so try
+    :login if :plain doesn't work.
+
+    There are more extensive authenication methods that IMAP can use, but
+    we do not support them at this time. If you have need for that support,
+    please let me know!!!!!
+
+    Now, let's assume you have your settings working. Now what? There are no 
+    filters specified, which is the entire point of this program!!! So let's
+    add one:
+
+    #+begin_src ruby
+    account :gmail do
+      login 'youruserid@gmail.com', 'yourpassword'
+      serv "imap.gmail.com"
+      auth :plain
+    end
+
+    filter :github, 'gmail:INBOX' do
+      search do
+        from 'github.com'
+        unseen
+      end
+  
+      cp 'gmail:test/Github'
+    end
+
+    activate :all
+    #+end_src
+
+    Note that the "actvate :all" is always the last entry. The filter
+    directive is fairly sophisticated, supporing most of what is possible
+    with IMAP search. We will document this more throughly at a later date.
+
+    In this filter example, we are receiving email notifications from github
+    which is cluttering up the Inbox. This filter will copy the "unseen", or
+    unread ones to the "test/Github" mailbox.
+
+    Notice in the string, we also specify the target account label. This is 
+    required, and will allow you to specify alternate accounts very easily.
+
+    The mailbox will automatically be created if it does not exist yet.
+
+    So now, let's run it with the following commands. First, we wish to do a
+    sanity check, so we will do a dry run:
+
+    #+begin_src basn
+    imap-filter filter default.imap -u -v1
+    #+end_src
+
+    The "-u" is the alias for "--dryrun"
+
 
 *** Environment variables
     | Variable        | Description                                                       |
