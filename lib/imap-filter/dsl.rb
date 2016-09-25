@@ -93,6 +93,9 @@ module ImapFilter
       OPS = [:or, :not, :new]
       MARKS = {
         seen: :Seen,
+        read: :Seen,
+        unread: :Unseen,
+        unseen: :Unseen,
         deleted: :Deleted,
         flagged: :Flagged
       }
@@ -101,7 +104,9 @@ module ImapFilter
         new: 'NEW',
         recent: 'RECENT',
         seen: 'SEEN',
+        read: 'SEEN',
         unseen: 'UNSEEN',
+        unread: 'UNSEEN',
         answered: 'ANSWERED',
         unanswered: 'UNANSWERED',
         deleted: 'DELETED',
@@ -249,10 +254,12 @@ module ImapFilter
         def seen
           directives << 'SEEN'
         end
+        alias red seen
         
         def unseen
           directives << 'UNSEEN'
         end
+        alias unread unseen
         
         def keyword key
           directives << 'KEYWORD' << key

@@ -20,19 +20,19 @@ account :google do
 end
 
 filter :slashdot, 'gmx:INBOX', from: 'slashdot' do
-  #mark :read
+  mark :seen
   mv 'gmx:Slashdot'
-  #cp 'google:INBOX'
+  cp 'google:INBOX'
 end
 
 filter :github, 'gmx:INBOX' do
   search do
     from 'github'
-    op :not, :new
+    unseen
   end
 
   mv 'gmx:Github'
-  #mv 'google:news/Github'
+  mv 'google:news/Github'
 end
 
 filter :gitter, 'gmx:INBOX', from: 'gitter' do
@@ -41,16 +41,11 @@ end
 
 filter :xing, 'gmx:INBOX', from: 'xing.com' do
   unmark :seen
-  #mv 'gmx:Gitter'
+  mv 'gmx:Gitter'
 end
 
 filter :neat, 'yahoo:NEAT', :unseen do
   cp 'gmx:Lists/NEAT'
-  mark :seen
-end
-
-filter :foo, 'google:Shelby', :unseen do
-  cp 'gmx:Foobar/Smart'
   mark :seen
 end
 
