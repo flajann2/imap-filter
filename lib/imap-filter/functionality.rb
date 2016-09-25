@@ -4,14 +4,10 @@ module ImapFilter
     include Forwardable
     include ImapFilter::DSL
 
-    SEARCH_CRITERIA = {
-      all: nil,
-      new: nil,
-      seen: nil
-    }
-    
-    BODYTEXT ='BODY.PEEK[TEXT]'
-    
+    FULL ='(UID RFC822.SIZE ENVELOPE BODY.PEEK[TEXT])'
+    BODYTEXT = 'BODY[TEXT]'
+    SUBJECTPEEKLIST = '(UID RFC822.SIZE BODY.PEEK[HEADER.FIELDS (SUBJECT)])'
+    SUBJECTLIST = 'BODY[HEADER.FIELDS (SUBJECT)]'
     class FunctFilter
       extend Forwardable
       
@@ -58,10 +54,9 @@ module ImapFilter
       end
 
       def subject_list
-        subj = 'BODY.PEEK[HEADER.FIELDS (SUBJECT)]'
         unless seq.empty?
-          acc.imap.fetch(seq, subj).map do |subject|
-            subject.attr[subj].to_s.strip.tr("\n\r", '')
+          acc.imap.fetch(seq, SUBJECTPEEKLIST).map do |subject|
+            subject.attr[SUBJECTLIST].to_s.strip.tr("\n\r", '')
           end
         else
           []
@@ -76,10 +71,10 @@ module ImapFilter
 
       def _cross_account_mvcp op, dest_acc, dest_mbox        
         ensure_mailbox dest_acc, dest_mbox
-        acc.imap.fetch(seq, BODYTEXT).each do |fdat|
+        acc.imap.fetch(seq, FULL).each do |fdat|
           unless _options[:verbose] < 2
             print "  >>".yellow
-            puts " seq #{fdat.seqno} -> #{dest_acc.name}:#{dest_mbox}".light_blue
+            puts " seq #{fdat.seqno} #{fdat.attr['ENVELOPE']['subject']} -> #{dest_acc.name}:#{dest_mbox}".light_blue
           end
           dest_acc.imap.append dest_mbox, fdat.attr[BODYTEXT], fdat.attr['FLAGS']
         end

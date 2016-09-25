@@ -11,6 +11,7 @@ require 'forwardable'
 module ImapFilter
 end
 
+require_relative 'imap-filter/monkeypatches'
 require_relative 'imap-filter/dsl'
 require_relative 'imap-filter/functionality'
 require_relative 'imap-filter/imap-filter'

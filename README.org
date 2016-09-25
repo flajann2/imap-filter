@@ -75,6 +75,12 @@
    This section is my personal scratchpad. Should be of
    no revelance to anyone else. Please ignore what's in
    this section.
+*** Raw login
+    imap = Net::IMAP.new('imap.gmail.com', ssl: true) 
+    imap.authenticate('PLAIN', ENV['GOOGLE_EMAIL'], ENV['GOOGLE_PASS'])
+    imap.select('Shelby')
+    seq = imap.search(['ALL'])
+
 *** FETCH
    acc.imap.fetch(1..2, 'BODY[TEXT]') -- the entire text, flags as well.
    acc.imap.fetch(1..2, 'BODY[HEADER.FIELDS (SUBJECT)]')
