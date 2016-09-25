@@ -130,19 +130,19 @@ module ImapFilter
         @actions << [:delete]
       end
 
-      def mark *flags
+      def mark *flags, custom: false
         flags.each do |f|
           raise "Illegal flag #{f}" unless MARKS.member? f
-        end
-        @actions << [:mark] + flags.map{ |f| MARKS[f] }
+        end unless custom
+        @actions << [:mark] + flags.map{ |f| MARKS[f] || f }
       end
       alias store mark
 
-      def unmark *flags
+      def unmark *flags,  custom: false
         flags.each do |f|
           raise "Illegal flag #{f}" unless MARKS.member? f
-        end
-        @actions << [:unmark] + flags.map{ |f| MARKS[f] }
+        end unless custom
+        @actions << [:unmark] + flags.map{ |f| MARKS[f] || f }
       end
       alias unstore unmark
 

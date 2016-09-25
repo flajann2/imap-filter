@@ -44,12 +44,14 @@ filter :xing, 'gmx:INBOX', from: 'xing.com' do
   #mv 'gmx:Gitter'
 end
 
-filter :neat, 'yahoo:NEAT', :all do
-  cp 'gmx:NEAT'
+filter :neat, 'yahoo:NEAT', :unseen do
+  cp 'gmx:Lists/NEAT'
+  mark :seen
 end
 
-filter :foo, 'google:Shelby', :all do
-  cp 'gmx:Foobar'
+filter :foo, 'google:Shelby', :unseen do
+  cp 'gmx:Foobar/Smart'
+  mark :seen
 end
 
 filter :spam,  'gmx:INBOX', from: ['news.brgmedia.com', 'travel.hoteltravel-email.com'] do

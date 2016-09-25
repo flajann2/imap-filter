@@ -25,10 +25,7 @@ class Net::IMAP::Envelope
        s.bcc.map{ |f|
          "#{f.name} <#{f.mailbox}@#{f.host}>"
        }.join ',' unless s.bcc.nil? } ],
-    ['In-Reply-To:', ->(s){
-       s.in_reply_to.map{ |f|
-         "#{f.name} <#{f.mailbox}@#{f.host}>"
-       }.join ',' unless s.in_reply_to.nil? } ],
+    ['In-Reply-To:', ->(s){ s.in_reply_to }],
   ].to_h
   
   def email_header
