@@ -1,33 +1,39 @@
 class Net::IMAP::Envelope
   CRLF = "\r\n"
   HEDCNS = [
-    ['Date:', ->(){ date } ],
-    ['Subject:', ->(){ subject } ],
-    ['Date:', ->(){ date } ],
-    ['Message-ID:', ->(){ message_id }],
-    ['Sender:', ->(){
-       sender.map{ |f|
+    ['Date:', ->(s){ s.date } ],
+    ['Subject:', ->(s){ s.subject } ],
+    ['Date:', ->(s){ s.date } ],
+    ['Message-ID:', ->(s){ s.message_id }],
+    ['Sender:', ->(s){
+       s.sender.map{ |f|
          "#{f.name} <#{f.mailbox}@#{f.host}>"
-       }.join ',' } unless.sender.nil? ],
-    ['From:', ->(){
-       from.map{ |f|
+       }.join ',' unless s.sender.nil? } ],
+    ['From:', ->(s){
+       s.from.map{ |f|
          "#{f.name} <#{f.mailbox}@#{f.host}>"
-       }.join ',' } unless.from.nil? ],
-    ['To:', ->(){
-       to.map{ |f|
+       }.join ',' unless s.from.nil? } ],
+    ['To:', ->(s){
+       s.to.map{ |f|
          "#{f.name} <#{f.mailbox}@#{f.host}>"
-       }.join ',' } unless.to.nil? ],
-    ['Cc:', ->(){
-       cc.map{ |f|
+       }.join ',' unless s.to.nil? } ],
+    ['Cc:', ->(s){
+       s.cc.map{ |f|
          "#{f.name} <#{f.mailbox}@#{f.host}>"
-       }.join ',' } unless.cc.nil? ],
-    ['Bcc:', ->(){
-       bcc.map{ |f|
+       }.join ',' unless s.cc.nil? } ],
+    ['Bcc:', ->(s){
+       s.bcc.map{ |f|
          "#{f.name} <#{f.mailbox}@#{f.host}>"
-       }.join ',' } unless.bcc.nil? ],
-
+       }.join ',' unless s.bcc.nil? } ],
+    ['In-Reply-To:', ->(s){
+       s.in_reply_to.map{ |f|
+         "#{f.name} <#{f.mailbox}@#{f.host}>"
+       }.join ',' unless s.in_reply_to.nil? } ],
   ].to_h
+  
   def email_header
+    HEDCNS.map{ |field, fun| "#{field} #{fun.(self)}" }
+      .join CRLF
   end
 end
 

@@ -76,7 +76,8 @@ module ImapFilter
             print "  >>".yellow
             puts " seq #{fdat.seqno} #{fdat.attr['ENVELOPE']['subject']} -> #{dest_acc.name}:#{dest_mbox}".light_blue
           end
-          dest_acc.imap.append dest_mbox, fdat.attr[BODYTEXT], fdat.attr['FLAGS']
+          raw = fdat.attr['ENVELOPE'].email_header + fdat.attr[BODYTEXT]
+          dest_acc.imap.append dest_mbox, raw, fdat.attr['FLAGS']
         end
       end
       
