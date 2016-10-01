@@ -79,6 +79,7 @@ module ImapFilter
             end
             raw = fdat.attr['ENVELOPE'].email_header + fdat.attr[BODYTEXT]
             dest_acc.imap.append dest_mbox, raw, fdat.attr['FLAGS']
+            acc.imap.noop # just to keep this account open TODO: we do not need a noop on every iteration
           end
         rescue => e
           puts "ERROR: #{e} -- perhaps you did a move or delete operation before copy?".light_red
@@ -116,6 +117,7 @@ module ImapFilter
       
       def mark *flags
         puts "  mark #{flags} in #{acc.name}".light_blue unless _options[:verbose] < 1
+        puts "DISCONNECTED".light_red if acc.imap.disconnected?
         acc.imap.store seq, '+FLAGS.SILENT', flags unless seq.empty? or _options[:dryrun]
       end
       

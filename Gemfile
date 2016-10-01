@@ -5,6 +5,7 @@ gem "awesome_print",  "~> 1"
 gem "text-table",  "~> 1"
 gem "thor", "~> 0"
 gem "colorize", "~> 0"
+gem "aspector", "~> 0"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

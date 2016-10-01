@@ -279,9 +279,11 @@
 
 ** Release Notes and Known Issues
 *** Release Notes
-    | Version | Breif           | Description |
-    |---------+-----------------+-------------|
-    | v0.0.2  | Initial Release |             |
+    | Version | Breif                  | Description                                                                                                                    |
+    |---------+------------------------+--------------------------------------------------------------------------------------------------------------------------------|
+    | v0.0.2  | Initial Release        |                                                                                                                                |
+    | v0.0.3  | Fixed bug with timeout | On some lengthy remove copy/move operations, the source account can timeout. We do a simple NOOP to keep the connection alive. |
+
 *** Known Issues
     |       Date | Description                                                    |
     |------------+----------------------------------------------------------------|
@@ -319,3 +321,10 @@
    acc.imap.fetch(1..2, 'BODY[TEXT]') -- the entire text, flags as well.
    acc.imap.fetch(1..2, 'BODY[HEADER.FIELDS (SUBJECT)]')
    :END:
+
+   
+   :Syswrite:
+   IOError: closed stream
+   from 2.3.1/lib/ruby/2.3.0/openssl/buffering.rb:322:in `syswrite'
+   :END:
+

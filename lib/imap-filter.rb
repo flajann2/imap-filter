@@ -6,6 +6,7 @@ require 'colorize'
 require 'awesome_print'
 require 'net/imap'
 require 'forwardable'
+require 'aspector'
 
 module ImapFilter
 end

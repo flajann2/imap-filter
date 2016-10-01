@@ -34,4 +34,16 @@ class Net::IMAP::Envelope
   end
 end
 
+class Net::IMAP
+  def account= acc
+    @account = acc
+  end
+  def account
+    @account
+  end
+end
+
+class IMAPHooks < Aspector::Base
+  default private_methods: true
+end
 
