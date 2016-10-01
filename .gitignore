@@ -12,6 +12,8 @@ doc
 # bundler
 .bundle
 
+*.log
+
 # juwelier generated
 pkg
 

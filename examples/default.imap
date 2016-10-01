@@ -49,6 +49,12 @@ filter :neat, 'yahoo:NEAT', :unseen do
   mark :seen
 end
 
+filter :science, 'yahoo:Wissenschaft', :unseen do
+  cp 'gmx:Lists/Wissenschaft'
+  mark :seen
+end
+
+
 filter :spam, 'gmx:INBOX', from: ['news.brgmedia.com', 'travel.hoteltravel-email.com'] do
   delete
 end

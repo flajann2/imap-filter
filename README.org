@@ -223,7 +223,7 @@
     to do is search a single field, like in this case, the From
     field.
 
-    Others are obvios: to:, cc:, subject: will all work here.
+    Others are obvios: to:, cc:, subject: will all work here.no-expand 
 
 *** Environment variables
     | Variable        | Description                                                       |
