@@ -285,10 +285,13 @@
     | v0.0.3  | Fixed bug with timeout | On some lengthy remove copy/move operations, the source account can timeout. We do a simple NOOP to keep the connection alive. |
 
 *** Known Issues
-    |       Date | Description                                                    |
-    |------------+----------------------------------------------------------------|
-    | 2016-09-25 | Remote copy / moves of HTML-based email does not work cleanly. |
-    |            |                                                                |
+    |       Date | Description                                                                                                                                                                                                                           |
+    |------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | 2016-09-25 | Remote copy / moves of HTML-based email does not work cleanly.                                                                                                                                                                        |
+    | 2016-10-03 | Getting "Too many errors" ByeResponseError -- most likely from the errors of duplicate mailboxes (which is OK but some servers hate that). So I will have to check for the existence of the mailbox first before trying to create it. |
+    |            | Timeout errors still persist in some cases.                                                                                                                                                                                           |
+    |            | Need to capture all errors and provide human-readable responses, unless a certail verbosity level has been set.                                                                                                                       |
+    |            |                                                                                                                                                                                                                                       |
 
 ** Contributing to imap-filter
 
