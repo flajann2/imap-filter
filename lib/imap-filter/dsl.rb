@@ -38,7 +38,7 @@ module ImapFilter
         @userid = userid
         @pass = password
         @use_ssl = true
-        @mbox_list = @use_port = nil
+        @use_port = nil
         @auth_type = 'PLAIN'
       end
 

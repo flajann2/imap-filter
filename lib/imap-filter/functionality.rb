@@ -39,6 +39,17 @@ module ImapFilter
             nil
           end }.compact.to_h
       end
+
+      def member? mbox
+        mbox_list.member? mbox
+      end
+
+      def ensure_mailbox mbox
+        unless member? mbox
+          @dacc.imap.create mbox
+          @mbox_list[mbox] = [:new_mailbox, :new_mailbox]
+        end
+      end
     end
     
     FULL ='(UID RFC822.SIZE ENVELOPE BODY.PEEK[TEXT])'
@@ -64,7 +75,7 @@ module ImapFilter
         a, b = ambox.split ':'
         a, b = [nil, a] if b.nil?
         a = nil if a == ''
-        acc = a.nil? ? default_account : _accounts[a.to_sym]
+        acc = FunctAccount.new( a.nil? ? default_account : _accounts[a.to_sym] )
         mbox = b
         [acc, mbox]
       end
@@ -77,9 +88,8 @@ module ImapFilter
 
       def ensure_mailbox account, mailbox
         begin
-          account.imap.create mailbox
+          account.ensure_mailbox mailbox
         rescue Net::IMAP::NoResponseError => e
-          # we ignore this because it -- probably -- means the mailbox already exists.
           puts "  *** ignored mailbox error: #{e}".red unless _options[:verbose] < 1
         end
       end
