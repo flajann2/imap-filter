@@ -3,7 +3,30 @@ module ImapFilter
   module Functionality
     include Forwardable
     include ImapFilter::DSL
+    @@facc_list = nil
+    
+    def self._functional_accounts
+      @@facc_list ||= _accounts.map { |name, acc|
+        [name, FunctAccount.new( acc )]
+      }.to_h
+    end
+    
+    class FunctAccount
+      extend Forwardable
+      
+      attr :dacc
+      
+      def_delegators :@dacc, :name, :userid, :pass,
+                     :fqdn, :use_ssl, :use_port,
+                     :auth_type, :imap, :delim,
+                     :mbox_list, :mbox_list=, :to_s,
+                     :_open_connection, :_close_connection
 
+      def initialize acc
+        @dacc = acc
+      end
+    end
+    
     FULL ='(UID RFC822.SIZE ENVELOPE BODY.PEEK[TEXT])'
     BODYTEXT = 'BODY[TEXT]'
     SUBJECTPEEKLIST = '(UID RFC822.SIZE BODY.PEEK[HEADER.FIELDS (SUBJECT)])'

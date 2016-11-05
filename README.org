@@ -281,8 +281,8 @@
 *** Release Notes
     | Version | Breif                  | Description                                                                                                                    |
     |---------+------------------------+--------------------------------------------------------------------------------------------------------------------------------|
-    | v0.0.2  | Initial Release        |                                                                                                                                |
     | v0.0.3  | Fixed bug with timeout | On some lengthy remove copy/move operations, the source account can timeout. We do a simple NOOP to keep the connection alive. |
+    | v0.0.2  | Initial Release        |                                                                                                                                |
 
 *** Known Issues
     |       Date | Description                                                                                                                                                                                                                           |

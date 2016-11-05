@@ -19,6 +19,9 @@ module ImapFilter
         puts "script %s " % [script] if _options[:verbose] >= 1
         load script, true
       end
+
+      def list
+      end
     end
   end
 end

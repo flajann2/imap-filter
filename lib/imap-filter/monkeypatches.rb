@@ -46,4 +46,3 @@ end
 class IMAPHooks < Aspector::Base
   default private_methods: true
 end
-

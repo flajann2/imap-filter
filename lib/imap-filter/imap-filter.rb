@@ -42,12 +42,14 @@ module ImapFilter
     
     def self.login_imap_accounts test: false
       puts "====== #{test ? 'Test' : 'Login'} Accounts".light_yellow
-      _accounts.each do |name, account|
+      _functional_accounts.each do |name, account|
         print "  #{name}...".light_white
         begin
           account._open_connection
-          puts "SUCCESS, delim #{account.delim}".light_green
-          list_mboxes(account).each do |mbox, stat, attr|
+          account.mbox_list = list_mboxes(account)
+          puts "SUCCESS, delim #{account.delim}".light_green          
+          
+          account.mbox_list.each do |mbox, stat, attr|
             print "  #{mbox}".light_blue
             print " #{stat}".light_red
             puts " #{attr}".light_cyan
