@@ -33,7 +33,7 @@ module ImapFilter
           account._open_connection
           puts "SUCCESS, delim #{account.delim}".light_green          
           
-          account.mbox_list.each do |mbox, stat, attr|
+          account.mbox_list.each do |mbox, (stat, attr)|
             print "  #{mbox}".light_blue
             print " #{stat}".light_red
             puts " #{attr}".light_cyan

@@ -31,13 +31,13 @@ module ImapFilter
                      .map { |mbox, attr|
           begin
             [mbox,
-             @dacc.imap.status(mbox, STATUS.values)
+             [@dacc.imap.status(mbox, STATUS.values)
                .map{ |k, v| "#{ISTAT[k]}:#{v}" }
                .join(' '),
-             attr]
+              attr]]
           rescue
             nil
-          end }.compact
+          end }.compact.to_h
       end
     end
     
