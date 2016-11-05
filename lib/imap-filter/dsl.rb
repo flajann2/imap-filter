@@ -33,7 +33,6 @@ module ImapFilter
     class Account < Dsl
       attr :name, :userid, :pass, :fqdn, :use_ssl, :use_port, :auth_type
       attr :imap, :delim
-      attr_accessor :mbox_list
       
       def login userid, password
         @userid = userid

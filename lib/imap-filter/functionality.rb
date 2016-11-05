@@ -18,12 +18,26 @@ module ImapFilter
       
       def_delegators :@dacc, :name, :userid, :pass,
                      :fqdn, :use_ssl, :use_port,
-                     :auth_type, :imap, :delim,
-                     :mbox_list, :mbox_list=, :to_s,
+                     :auth_type, :imap, :delim, :to_s,
                      :_open_connection, :_close_connection
 
       def initialize acc
         @dacc = acc
+      end
+
+      def mbox_list
+        @mbox_list ||= @dacc.imap.list('', '*')
+                     .map { |m| [m['name'], m['attr']] }
+                     .map { |mbox, attr|
+          begin
+            [mbox,
+             @dacc.imap.status(mbox, STATUS.values)
+               .map{ |k, v| "#{ISTAT[k]}:#{v}" }
+               .join(' '),
+             attr]
+          rescue
+            nil
+          end }.compact
       end
     end
     

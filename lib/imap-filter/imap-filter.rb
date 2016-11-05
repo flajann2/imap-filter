@@ -24,21 +24,6 @@ module ImapFilter
     end
 
     # List all mboxes of given account and their statuses
-    def self.list_mboxes account
-      account.imap.list('', '*')
-        .map { |m| [m['name'], m['attr']] }
-        .map { |mbox, attr|
-        begin
-          [mbox,
-           account.imap.status(mbox, STATUS.values)
-             .map{ |k, v| "#{ISTAT[k]}:#{v}" }
-             .join(' '),
-           attr]
-        rescue
-          nil
-        end }
-        .compact
-    end
     
     def self.login_imap_accounts test: false
       puts "====== #{test ? 'Test' : 'Login'} Accounts".light_yellow
@@ -46,7 +31,6 @@ module ImapFilter
         print "  #{name}...".light_white
         begin
           account._open_connection
-          account.mbox_list = list_mboxes(account)
           puts "SUCCESS, delim #{account.delim}".light_green          
           
           account.mbox_list.each do |mbox, stat, attr|
