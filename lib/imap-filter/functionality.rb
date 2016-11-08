@@ -75,7 +75,7 @@ module ImapFilter
         a, b = ambox.split ':'
         a, b = [nil, a] if b.nil?
         a = nil if a == ''
-        acc = FunctAccount.new( a.nil? ? default_account : _accounts[a.to_sym] )
+        acc = Functionality::_functional_accounts[ a.nil? ? default_account : a.to_sym ]
         mbox = b
         [acc, mbox]
       end
