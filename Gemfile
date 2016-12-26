@@ -6,11 +6,12 @@ gem "text-table",  "~> 1"
 gem "thor", "~> 0"
 gem "colorize", "~> 0"
 gem "aspector", "~> 0"
+gem "json", "~> 2.0", ">= 2.0.2"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do
-  gem "rspec", "~> 2"
+  gem "rspec", "~> 3"
   gem "yard", "~> 0"
   gem "rdoc", "~> 3"
   gem "bundler", "~> 1"
