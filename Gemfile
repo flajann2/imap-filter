@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "semver", "~> 1"
+gem "semver2", "~> 3"
 gem "awesome_print",  "~> 1"
 gem "text-table",  "~> 1"
 gem "thor", "~> 0"
