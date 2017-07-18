@@ -4,6 +4,9 @@
   - [[#documentation][Documentation]]
     - [[#tutorial-and-examples][Tutorial and Examples]]
     - [[#environment-variables][Environment variables]]
+    - [[#oauth2-authenication][OAuth2 Authenication]]
+      - [[#google][Google]]
+      - [[#yahoo][Yahoo]]
     - [[#accessing-your-gmail][Accessing your Gmail]]
     - [[#automatic-blocks-might-happen-while-you-are-testing-your-email-accounts][Automatic blocks might happen while you are testing your Email accounts]]
     - [[#dsl][DSL]]
@@ -246,6 +249,11 @@
     | Variable        | Description                                                       |
     |-----------------+-------------------------------------------------------------------|
     | IMAPF_IMAP_FILE | pathname to the default .imap file. The default is ./default.imap |
+
+*** OAuth2 Authenication
+**** Google
+**** Yahoo
+    https://developer.yahoo.com/apps/create/
 
 *** Accessing your Gmail
     Google may automatically block this application by default.
