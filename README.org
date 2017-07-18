@@ -1,4 +1,5 @@
 * imap-filter
+** Intoduction
   imap-filter is a Ruby implementation of an IMAP filtering application.
   it can handle multiple IMAP accounts, and create IMAP folders automatically
   where none exists.
@@ -23,10 +24,10 @@
    gem 'imap-filter'
    #+end_src
 
-   By default, 
+   By default,
 
 ** Documentation
-   I think that to make this documenation truly "complete", I would wind up writing 
+   I think that to make this documenation truly "complete", I would wind up writing
    more lines than in the imap-filter code itself!!! I will attempt to be as concise
    as possible, and besides me writing a thick manual, no one wants to read such either.
 
@@ -62,7 +63,7 @@
     to your accounts and nothing more.
 
     And nothing happens. Why not? Very simple. The directive of this file
-    must be activated. Edit your default.imap and add "activate :all" to the very 
+    must be activated. Edit your default.imap and add "activate :all" to the very
     end:
 
     #+begin_src ruby
@@ -97,14 +98,14 @@
     ====== Test Accounts
       gmail...FAILED: Lookup failed xxxxxxxxxxxxx
     #+end_src
-    
+
     And so check your login line to make sure your userID and password is correct.
-    For some vendors, the userID is your complete email address. For others, it might 
+    For some vendors, the userID is your complete email address. For others, it might
     just be what procedes the '@'. Please check with your vendor to see what it is for
     you. Usually, your vendor will have IMAP Client instructions on their website.
 
     We use ssl connections by default, and it would be extremely insecure not to. But
-    you can turn off the ssl if need be. You can also change your port settings 
+    you can turn off the ssl if need be. You can also change your port settings
     accordingly, if your vendor uses a non-standard port. For example,
 
     #+begin_src ruby
@@ -127,7 +128,7 @@
     we do not support them at this time. If you have need for that support,
     please let me know!!!!!
 
-    Now, let's assume you have your settings working. Now what? There are no 
+    Now, let's assume you have your settings working. Now what? There are no
     filters specified, which is the entire point of this program!!! So let's
     add one:
 
@@ -143,7 +144,7 @@
         from 'github.com'
         unseen
       end
-  
+
       cp 'gmail:test/Github'
     end
 
@@ -158,7 +159,7 @@
     which is cluttering up the Inbox. This filter will copy the "unseen", or
     unread ones to the "test/Github" mailbox.
 
-    Notice in the string, we also specify the target account label. This is 
+    Notice in the string, we also specify the target account label. This is
     required, and will allow you to specify alternate accounts very easily.
 
     The mailbox will automatically be created if it does not exist yet.
@@ -172,8 +173,8 @@
 
     The "-u" is the alias for "--dryrun" The "-v1" is the verbosity switch. While
     doing your setups and debugging your scripts, you will want to use "-v1" or even
-    "-v2" verbosity settings. 
-    
+    "-v2" verbosity settings.
+
     If you actually have a match for the search critieria, you may see a list of messages
     that matched the search scroll by. In my test case:
 
@@ -193,7 +194,7 @@
     #+end_src
 
     Which are all unread or "unseen" as per our specificaions. Now no modifications
-    were peformed due to the "-u" dry run switch. 
+    were peformed due to the "-u" dry run switch.
 
     Now that we are feeling a bit more confident, let's run the same
     command without the "-u" setting:
@@ -208,7 +209,7 @@
 
     Well, that's it for the tutorial. Please have a look at the [[examples/default.imap][example]].
 
-    There's a shorthand for the filters that may interest you for the 
+    There's a shorthand for the filters that may interest you for the
     majority of your cases. For example:
 
     #+begin_src ruby
@@ -223,7 +224,7 @@
     to do is search a single field, like in this case, the From
     field.
 
-    Others are obvios: to:, cc:, subject: will all work here.no-expand 
+    Others are obvios: to:, cc:, subject: will all work here.no-expand
 
 *** Environment variables
     | Variable        | Description                                                       |
@@ -232,15 +233,15 @@
 
 *** Accessing your Gmail
     Google may automatically block this application by default.
-    Please visit the follow page to understand how to allow 
+    Please visit the follow page to understand how to allow
     imap-filter to access your Gmail account.
 
     https://support.google.com/accounts/answer/6010255
 
 *** Automatic blocks might happen while you are testing your Email accounts
     Depending on the vendor, while you are setting up your scripts, you will
-    be doing many tests. Some vendors like Yahoo might block the app if it sees 
-    what it consideres to be "too much" activity. If you see this happen, wait about 
+    be doing many tests. Some vendors like Yahoo might block the app if it sees
+    what it consideres to be "too much" activity. If you see this happen, wait about
     30 minutes before trying again. Should work in most cases.
 
 *** DSL
@@ -316,7 +317,7 @@
    this section.
 
    :Login:
-   imap = Net::IMAP.new('imap.gmail.com', ssl: true) 
+   imap = Net::IMAP.new('imap.gmail.com', ssl: true)
    imap.authenticate('PLAIN', ENV['GOOGLE_EMAIL'], ENV['GOOGLE_PASS'])
    imap.select('Shelby')
    seq = imap.search(['ALL'])
@@ -327,9 +328,8 @@
    acc.imap.fetch(1..2, 'BODY[HEADER.FIELDS (SUBJECT)]')
    :END:
 
-   
+
    :Syswrite:
    IOError: closed stream
    from 2.3.1/lib/ruby/2.3.0/openssl/buffering.rb:322:in `syswrite'
    :END:
-
