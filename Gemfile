@@ -7,6 +7,7 @@ gem "thor", "~> 0"
 gem "colorize", "~> 0"
 gem "aspector", "~> 0"
 gem "json", "~> 2.0", ">= 2.0.2"
+gem "gmail_xoauth", "~> 0"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

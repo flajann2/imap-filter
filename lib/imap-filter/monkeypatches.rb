@@ -27,7 +27,7 @@ class Net::IMAP::Envelope
        }.join ',' unless s.bcc.nil? } ],
     ['In-Reply-To:', ->(s){ s.in_reply_to }],
   ].to_h
-  
+
   def email_header
     HEDCNS.map{ |field, fun| "#{field} #{fun.(self)}" }
       .join CRLF
@@ -38,6 +38,7 @@ class Net::IMAP
   def account= acc
     @account = acc
   end
+
   def account
     @account
   end

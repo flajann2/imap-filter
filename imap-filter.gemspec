@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Fred Mitchell".freeze]
-  s.date = "2017-07-18"
+  s.date = "2017-07-30"
   s.description = "\n  imap-filter is a Ruby implementation of an IMAP filtering application.\n  it can handle multiple IMAP accounts, and create IMAP folders automatically\n  where none exists.\n\n  The imap-filter DSL makes it easy to filter. You can also do \"dry-runs\"\n  to make sure what happens is what is expected.".freeze
   s.email = "fred.mitchell@gmx.de".freeze
   s.executables = ["imap-filter".freeze]
@@ -59,6 +59,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<colorize>.freeze, ["~> 0"])
       s.add_runtime_dependency(%q<aspector>.freeze, ["~> 0"])
       s.add_runtime_dependency(%q<json>.freeze, [">= 2.0.2", "~> 2.0"])
+      s.add_runtime_dependency(%q<gmail_xoauth>.freeze, ["~> 0"])
       s.add_development_dependency(%q<rspec>.freeze, ["~> 3"])
       s.add_development_dependency(%q<yard>.freeze, ["~> 0"])
       s.add_development_dependency(%q<rdoc>.freeze, ["~> 3"])
@@ -79,6 +80,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<colorize>.freeze, ["~> 0"])
       s.add_dependency(%q<aspector>.freeze, ["~> 0"])
       s.add_dependency(%q<json>.freeze, [">= 2.0.2", "~> 2.0"])
+      s.add_dependency(%q<gmail_xoauth>.freeze, ["~> 0"])
       s.add_dependency(%q<rspec>.freeze, ["~> 3"])
       s.add_dependency(%q<yard>.freeze, ["~> 0"])
       s.add_dependency(%q<rdoc>.freeze, ["~> 3"])
@@ -100,6 +102,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<colorize>.freeze, ["~> 0"])
     s.add_dependency(%q<aspector>.freeze, ["~> 0"])
     s.add_dependency(%q<json>.freeze, [">= 2.0.2", "~> 2.0"])
+    s.add_dependency(%q<gmail_xoauth>.freeze, ["~> 0"])
     s.add_dependency(%q<rspec>.freeze, ["~> 3"])
     s.add_dependency(%q<yard>.freeze, ["~> 0"])
     s.add_dependency(%q<rdoc>.freeze, ["~> 3"])

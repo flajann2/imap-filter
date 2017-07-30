@@ -7,6 +7,7 @@ require 'awesome_print'
 require 'net/imap'
 require 'forwardable'
 require 'aspector'
+require 'gmail_xoauth'
 
 module ImapFilter
 end

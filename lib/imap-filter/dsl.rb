@@ -12,7 +12,7 @@ module ImapFilter
     def _options
       DSL::_global[:options]
     end
-    
+
     def _accounts
       DSL::_global[:accounts] ||= {}
     end
@@ -23,23 +23,29 @@ module ImapFilter
 
     class Dsl
       attr :name, :desc
-      
+
       def initialize(name, desc=nil, &ignore)
         @name = name
         @desc = desc
       end
     end
-    
+
     class Account < Dsl
       attr :name, :userid, :pass, :fqdn, :use_ssl, :use_port, :auth_type
       attr :imap, :delim
-      
-      def login userid, password
+
+      LOGIN_TYPES = {
+        oauth1: 'XOUATH',
+        oauth2: 'XOAUTH2',
+        plain: 'PLAIN' }
+
+      def login userid, password, type: :plain
         @userid = userid
         @pass = password
         @use_ssl = true
         @use_port = nil
-        @auth_type = 'PLAIN'
+        @login_type = type
+        @auth_type = LOGIN_TYPES[type]
       end
 
       def serv fqdn
@@ -49,7 +55,7 @@ module ImapFilter
       def ssl t
         @use_ssl = t
       end
-      
+
       def port p
         @use_port = p
       end
@@ -57,12 +63,12 @@ module ImapFilter
       def auth type
         @auth_type = type.to_s.upcase
       end
-      
+
       def initialize(name, &block)
         super
         @name = name
         instance_eval( &block )
-        _accounts[name] = self      
+        _accounts[name] = self
       end
 
       def to_s
@@ -81,7 +87,7 @@ module ImapFilter
 
         print "\n    *** auth #{userid} pass #{pass}...".light_cyan unless _options[:verbose] < 2
         imap.authenticate(auth_type, userid, pass)
-        @delim = imap.list('', '').first.delim        
+        @delim = imap.list('', '').first.delim
       end
 
       def _close_connection
@@ -121,7 +127,7 @@ module ImapFilter
       def list *a, **h
         @actions << [:list, a, h]
       end
-      
+
       def move to_mbox
         @actions << [:move, to_mbox]
       end
@@ -131,7 +137,7 @@ module ImapFilter
         @actions << [:copy, to_mbox]
       end
       alias cp copy
-      
+
       def delete
         @actions << [:delete]
       end
@@ -152,7 +158,7 @@ module ImapFilter
       end
       alias unstore unmark
 
-      def search &block        
+      def search &block
         def before d
           directives << 'BEFORE' << d
         end
@@ -173,13 +179,13 @@ module ImapFilter
           directives << 'FROM' << s
         end
 
-        def op *a          
+        def op *a
           a.each { |x|
             raise "illegal operator #{x}" unless OPS.member? x
             directives << x.to_s.upcase
           }
-        end          
-        
+        end
+
         def on d
           directives << 'ON' << d
         end
@@ -187,27 +193,27 @@ module ImapFilter
         def since d
           directives << 'SINCE' << d
         end
-        
+
         def senton d
           directives << 'SENTON' << d
         end
-        
+
         def sentsince d
           directives << 'SENTSINCE' << d
         end
-        
+
         def sentbefore d
           directives << 'SENTBEFORE' << d
         end
-        
-        def smaller n 
+
+        def smaller n
           directives << 'SMALLER' << n
         end
 
         def subject s
           directives << 'SUBJECT' << s
         end
-        
+
         def text s
           directives << 'TEXT' << s
         end
@@ -219,58 +225,58 @@ module ImapFilter
         def all
           directives << 'ALL'
         end
-        
+
         def answered
           directives << 'ANSWERED'
         end
-        
+
         def unanswered
           directives << 'UNANSWERED'
         end
-        
+
         def deleted
           directives << 'DELETED'
         end
-        
+
         def undeleted
           directives << 'UNDELETED'
         end
-        
+
         def draft
           directives << 'DRAFT'
         end
-        
+
         def undraft
           directives << 'UNDRAFT'
         end
-        
+
         def flagged
           directives << 'FLAGGED'
         end
-        
+
         def unflagged
           directives << 'UNFLAGGED'
         end
-        
+
         def seen
           directives << 'SEEN'
         end
         alias red seen
-        
+
         def unseen
           directives << 'UNSEEN'
         end
         alias unread unseen
-        
+
         def keyword key
           directives << 'KEYWORD' << key
-        end      
-        
+        end
+
         def unkeyword key
           directives << 'UNKEYWORD' << key
-        end      
-        
-        instance_eval &block        
+        end
+
+        instance_eval &block
       end
 
       def massage directives
@@ -291,14 +297,14 @@ module ImapFilter
           directives
         end
       end
-      
+
       # note that directives can be either a hash or a single symbol
       def initialize(name, mbox, directives=[], &block)
         super(name)
         @mbox = mbox
         @directives = massage directives
         @actions = []
-        instance_eval &block 
+        instance_eval &block
         _filters[name] = self
       end
 
@@ -306,7 +312,7 @@ module ImapFilter
         "MBOX #{mbox} DIRECTIVES #{directives}"
       end
     end
-    
+
     def account name, &block
       Account.new name, &block
     end
@@ -314,7 +320,7 @@ module ImapFilter
     def filter name, mbox, singledir=nil, **directives, &block
       Filter.new name, mbox, (singledir || directives), &block
     end
-    
+
     def activate filters
       Functionality.run_filters filters
     end
