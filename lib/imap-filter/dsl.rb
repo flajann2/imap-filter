@@ -31,7 +31,17 @@ module ImapFilter
     end
 
     class Account < Dsl
-      attr :name, :userid, :pass, :fqdn, :use_ssl, :use_port, :auth_type
+      attr :name,
+           :userid,
+           :pass,
+           :fqdn,
+           :use_ssl,
+           :use_port,
+           :auth_type,
+           :login_type,
+           :consumer_key,
+           :consumer_secret
+
       attr :imap, :delim
 
       LOGIN_TYPES = {
@@ -39,13 +49,18 @@ module ImapFilter
         oauth2: 'XOAUTH2',
         plain: 'PLAIN' }
 
-      def login userid, password, type: :plain
+      def login userid, password = nil,
+                type: :plain,
+                key: nil,
+                secret: nil
         @userid = userid
         @pass = password
         @use_ssl = true
         @use_port = nil
         @login_type = type
         @auth_type = LOGIN_TYPES[type]
+        @consumer_key = key
+        @consumer_secret = secret
       end
 
       def serv fqdn
@@ -85,9 +100,23 @@ module ImapFilter
         end
         @imap.account = self
 
-        print "\n    *** auth #{userid} pass #{pass}...".light_cyan unless _options[:verbose] < 2
-        imap.authenticate(auth_type, userid, pass)
+        print "\n    *** auth #{userid} type #{auth_type} pass #{pass} key #{consumer_key}...".light_cyan unless _options[:verbose] < 2
+        _authenticate
         @delim = imap.list('', '').first.delim
+      end
+
+      def _authenticate
+        case login_type
+        when :plain, :oauth2
+          require 'pry'; binding.pry #DEBUGGING
+          imap.authenticate(auth_type, userid, pass)
+
+        when :oauth1 # userid is consumer_key, pass is consumer_secret
+          imap.authenticate(auth_type, userid,
+                            two_legged: true,
+                            consumer_key: consumer_key,
+                            consumer_secret: consumer_secret)
+        end
       end
 
       def _close_connection
