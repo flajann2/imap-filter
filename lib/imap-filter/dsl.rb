@@ -108,7 +108,6 @@ module ImapFilter
       def _authenticate
         case login_type
         when :plain, :oauth2
-          require 'pry'; binding.pry #DEBUGGING
           imap.authenticate(auth_type, userid, pass)
 
         when :oauth1 # userid is consumer_key, pass is consumer_secret
