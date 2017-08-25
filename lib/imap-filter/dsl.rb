@@ -101,6 +101,7 @@ module ImapFilter
         @imap.account = self
 
         print "\n    *** auth #{userid} type #{auth_type} pass #{pass} key #{consumer_key}...".light_cyan unless _options[:verbose] < 2
+        print "\n    *** capability #{imap.capability().join(',')}".light_cyan unless _options[:verbose] < 2
         _authenticate
         @delim = imap.list('', '').first.delim
       end
@@ -108,6 +109,8 @@ module ImapFilter
       def _authenticate
         case login_type
         when :plain, :oauth2
+          #Net::IMAP.debug = true
+          require 'pry'; binding.pry if userid == ENV['GOOGLE_REPLICONICS_EMAIL'] #DEBUGGING
           imap.authenticate(auth_type, userid, pass)
 
         when :oauth1 # userid is consumer_key, pass is consumer_secret
