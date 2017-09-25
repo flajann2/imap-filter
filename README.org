@@ -280,12 +280,13 @@
 
 ** Release Notes and Known Issues
 *** Release Notes
-    | Version | Breif                   | Description                                                                                                                                                                                              |
-    |---------+-------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-    | v0.1.0  | election day bug fixed  | This was an issue with moves not deleting the sources, and had to do with state information not existing in the duplicate delegator object. This snafu has been dealt with. No more duplicate delegators |
-    | v0.0.4  | "Too many errors" fixed | The "duplicate mailbox" error was being counted by some providers as being "too much" so now we check first before attempting to create a new mailbox.                                                   |
-    | v0.0.3  | Fixed bug with timeout  | On some lengthy remove copy/move operations, the source account can timeout. We do a simple NOOP to keep the connection alive.                                                                           |
-    | v0.0.2  | Initial Release         |                                                                                                                                                                                                          |
+    | Version | Breif                    | Description                                                                                                                                                                                              |
+    |---------+--------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    |   0.1.4 | Dangling command removed | There was a list command that I had not implemented yet, but Thor now complains when it sees that. So the dangling command was removed.                                                                  |
+    |   0.1.0 | election day bug fixed   | This was an issue with moves not deleting the sources, and had to do with state information not existing in the duplicate delegator object. This snafu has been dealt with. No more duplicate delegators |
+    |   0.0.4 | "Too many errors" fixed  | The "duplicate mailbox" error was being counted by some providers as being "too much" so now we check first before attempting to create a new mailbox.                                                   |
+    |   0.0.3 | Fixed bug with timeout   | On some lengthy remove copy/move operations, the source account can timeout. We do a simple NOOP to keep the connection alive.                                                                           |
+    |   0.0.2 | Initial Release          |                                                                                                                                                                                                          |
 
 *** Known Issues
     |       Date | Description                                                                                                                                                                                                                                                                             |
