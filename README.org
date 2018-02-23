@@ -1,4 +1,21 @@
-* imap-filter
+* imap-fiLter                                                      :TOC_5_gh:
+  - [[#intoduction][Intoduction]]
+  - [[#installation][Installation]]
+    - [[#docker-repo][Docker Repo]]
+  - [[#documentation][Documentation]]
+    - [[#tutorial-and-examples][Tutorial and Examples]]
+    - [[#environment-variables][Environment variables]]
+    - [[#accessing-your-gmail][Accessing your Gmail]]
+    - [[#automatic-blocks-might-happen-while-you-are-testing-your-email-accounts][Automatic blocks might happen while you are testing your Email accounts]]
+    - [[#dsl][DSL]]
+    - [[#reference-documents][Reference Documents]]
+  - [[#release-notes-and-known-issues][Release Notes and Known Issues]]
+    - [[#release-notes][Release Notes]]
+    - [[#known-issues][Known Issues]]
+  - [[#contributing-to-imap-filter][Contributing to imap-filter]]
+  - [[#copyright][Copyright]]
+  - [[#scratchpad][Scratchpad]]
+
 ** Intoduction
   imap-filter is a Ruby implementation of an IMAP filtering application.
   it can handle multiple IMAP accounts, and create IMAP folders automatically
@@ -25,6 +42,10 @@
    #+end_src
 
    By default,
+*** Docker Repo
+    An alternative is to use the public repo for imap-filter.
+
+    lordalveric/imap-filter
 
 ** Documentation
    I think that to make this documenation truly "complete", I would wind up writing

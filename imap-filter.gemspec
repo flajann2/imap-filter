@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Fred Mitchell".freeze]
-  s.date = "2017-07-18"
+  s.date = "2018-02-23"
   s.description = "\n  imap-filter is a Ruby implementation of an IMAP filtering application.\n  it can handle multiple IMAP accounts, and create IMAP folders automatically\n  where none exists.\n\n  The imap-filter DSL makes it easy to filter. You can also do \"dry-runs\"\n  to make sure what happens is what is expected.".freeze
   s.email = "fred.mitchell@gmx.de".freeze
   s.executables = ["imap-filter".freeze]
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/flajann2/imap-filter".freeze
   s.licenses = ["MIT".freeze]
   s.required_ruby_version = Gem::Requirement.new(">= 2.2".freeze)
-  s.rubygems_version = "2.6.11".freeze
+  s.rubygems_version = "2.7.3".freeze
   s.summary = "IMAP Scriptable filter for one or multiple Email accounts.".freeze
 
   if s.respond_to? :specification_version then

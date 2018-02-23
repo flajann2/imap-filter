@@ -1,0 +1,17 @@
+dflags=
+secrets_file=/development/privates/passwords.sh
+imap_file=/development/config/imap/default.imap
+
+rule imap
+     command = cp $imap_file secrets
+
+rule passwords
+     command = cp $secrets_file secrets
+     
+rule docker
+     command = docker build . $dflags
+
+build secrets/passwords.sh: passwords
+build secrets/default.imap: imap
+build : docker
+
