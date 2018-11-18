@@ -112,7 +112,7 @@ module ImapFilter
 
       def list *a, **h
         subject_list.each do |subject|
-          puts subject.attr[subj].to_s.strip.tr("\n\r", '').light_yellow
+          puts subject.light_yellow
         end unless seq.empty?
       end
 
