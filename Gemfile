@@ -14,7 +14,7 @@ group :development do
   gem "rspec", "~> 3"
   gem "yard", "~> 0"
   gem "rdoc", "~> 3"
-  gem "bundler", "~> 1"
+  gem "bundler", "~> 2"
   gem "juwelier", "~> 2"
   gem "simplecov", "~> 0"
   gem 'pry',            '~> 0'
